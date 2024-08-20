@@ -2,6 +2,8 @@ package com.renatusnetwork.glyphs.managers;
 
 import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import com.renatusnetwork.glyphs.objects.tags.Tag;
+import com.renatusnetwork.glyphs.utils.database.DatabaseUtils;
+import com.renatusnetwork.glyphs.utils.database.tables.PlayerStatsUtils;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -13,9 +15,9 @@ public class PlayerStatsManager {
     private static PlayerStatsManager instance;
 
     public static PlayerStatsManager getInstance() {
-        if (instance == null) {
+        if (instance == null)
             instance = new PlayerStatsManager();
-        }
+
         return instance;
     }
 
@@ -30,10 +32,9 @@ public class PlayerStatsManager {
     }
 
     public boolean add(Player player) {
-        // TODO: get from db
 
-        Tag currentTag = null;
-        HashSet<Tag> ownedTags = new HashSet<>();
+        Tag currentTag = PlayerStatsUtils.getCurrentTag(player.getUniqueId());
+        HashSet<Tag> ownedTags = PlayerStatsUtils.getCurrentTags(player.getUniqueId());
 
         return playerStatsMap.put(player,
                 PlayerStats.Builder.create()

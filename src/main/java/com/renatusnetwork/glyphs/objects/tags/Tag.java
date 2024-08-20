@@ -24,28 +24,32 @@ public class Tag {
         return other != null && id.equals(other.id);
     }
 
-    public static class TagBuilder {
+    public static class Builder {
         private UUID id;
         private String name;
         private String display;
         private String creatorName;
 
-        public TagBuilder setId(UUID id) {
+        public static Builder create() {
+            return new Builder();
+        }
+
+        public Builder setId(UUID id) {
             this.id = id;
             return this;
         }
 
-        public TagBuilder setName(String name) {
+        public Builder setName(String name) {
             this.name = name;
             return this;
         }
 
-        public TagBuilder setDisplay(String display) {
+        public Builder setDisplay(String display) {
             this.display = display;
             return this;
         }
 
-        public TagBuilder setCreatorName(String creatorName) {
+        public Builder setCreatorName(String creatorName) {
             this.creatorName = creatorName;
             return this;
         }

@@ -1,0 +1,5 @@
+name: ${project.name}
+description: "${project.description}"
+main: com.renatusnetwork.glyphs.Glyphs
+version: ${project.version}
+author: [xxBen]
