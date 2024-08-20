@@ -38,7 +38,7 @@ public class ConfigManager {
         try {
             if (!file.exists()) {
                 file.getParentFile().mkdirs();
-                copy(plugin.getResource("config/" + fileName + ".yml"), file);
+                copy(plugin.getResource( fileName + ".yml"), file);
             }
         }
         catch (Exception exception) {
