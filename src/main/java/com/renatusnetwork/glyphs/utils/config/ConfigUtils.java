@@ -1,4 +1,4 @@
-package com.renatusnetwork.glyphs.utils;
+package com.renatusnetwork.glyphs.utils.config;
 
 import com.renatusnetwork.glyphs.managers.ConfigManager;
 import org.bukkit.configuration.file.FileConfiguration;

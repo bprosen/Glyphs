@@ -1,7 +1,10 @@
 package com.renatusnetwork.glyphs.objects.players;
 
+import com.renatusnetwork.glyphs.objects.menus.Menu;
+import com.renatusnetwork.glyphs.objects.menus.MenuPage;
 import com.renatusnetwork.glyphs.objects.tags.Tag;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 import java.util.HashSet;
 
@@ -10,6 +13,7 @@ public class PlayerStats {
     private Player player;
     private Tag currentTag;
     private HashSet<Tag> ownedTags;
+    private MenuPage openedMenu;
 
     public PlayerStats(Player player, Tag currentTag, HashSet<Tag> ownedTags) {
         this.player = player;
@@ -21,6 +25,26 @@ public class PlayerStats {
         return currentTag;
     }
 
+    public boolean isInMenu() {
+        return openedMenu != null;
+    }
+
+    public Menu getOpenMenu() {
+        return openedMenu != null ? openedMenu.getMenu() : null;
+    }
+
+    public void setOpenedMenu(MenuPage openedMenu) {
+        this.openedMenu = openedMenu;
+    }
+
+    public void resetOpenedMenu() {
+        this.openedMenu = null;
+    }
+
+    public void openInventory(Inventory inventory) {
+        player.openInventory(inventory);
+    }
+
     public static class Builder {
         private Player player;
         private Tag currentTag;
@@ -30,17 +54,17 @@ public class PlayerStats {
             return new Builder();
         }
 
-        public Builder setPlayer(Player player) {
+        public Builder player(Player player) {
             this.player = player;
             return this;
         }
 
-        public Builder setCurrentTag(Tag currentTag) {
+        public Builder currentTag(Tag currentTag) {
             this.currentTag = currentTag;
             return this;
         }
 
-        public Builder setOwnedTags(HashSet<Tag> ownedTags) {
+        public Builder ownedTags(HashSet<Tag> ownedTags) {
             this.ownedTags = ownedTags;
             return this;
         }

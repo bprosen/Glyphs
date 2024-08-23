@@ -15,4 +15,8 @@ public class TagsUtils {
     public static HashMap<String, String> getTag(String name) {
         return DatabaseUtils.getResult(DatabaseManager.TAGS_TABLE, "*", "WHERE name=?", name);
     }
+
+    public static void createTag(String name, String creator) {
+        DatabaseUtils.runAync("INSERT INTO " + DatabaseManager.TAGS_TABLE + " (name, creator_name) VALUES (?, ?)", name, creator);
+    }
 }

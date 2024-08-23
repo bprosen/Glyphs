@@ -2,23 +2,18 @@ package com.renatusnetwork.glyphs.managers;
 
 import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import com.renatusnetwork.glyphs.objects.tags.Tag;
-import com.renatusnetwork.glyphs.utils.database.DatabaseUtils;
 import com.renatusnetwork.glyphs.utils.database.tables.PlayerStatsUtils;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.UUID;
 
 public class PlayerStatsManager {
 
     private static PlayerStatsManager instance;
 
     public static PlayerStatsManager getInstance() {
-        if (instance == null)
-            instance = new PlayerStatsManager();
-
-        return instance;
+        return instance == null ? instance = new PlayerStatsManager() : instance;
     }
 
     private HashMap<Player, PlayerStats> playerStatsMap;
@@ -34,14 +29,18 @@ public class PlayerStatsManager {
     public boolean add(Player player) {
 
         Tag currentTag = PlayerStatsUtils.getCurrentTag(player.getUniqueId());
-        HashSet<Tag> ownedTags = PlayerStatsUtils.getCurrentTags(player.getUniqueId());
+        HashSet<Tag> ownedTags = PlayerStatsUtils.getOwnedTags(player.getUniqueId());
 
         return playerStatsMap.put(player,
                 PlayerStats.Builder.create()
-                    .setPlayer(player)
-                    .setCurrentTag(currentTag)
-                    .setOwnedTags(ownedTags)
+                    .player(player)
+                    .currentTag(currentTag)
+                    .ownedTags(ownedTags)
                     .build()
                 ) == null;
+    }
+
+    public boolean remove(Player player) {
+        return playerStatsMap.remove(player) != null;
     }
 }

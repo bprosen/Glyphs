@@ -14,10 +14,7 @@ public class ConfigManager {
     private static ConfigManager instance;
 
     public static ConfigManager getInstance() {
-        if (instance == null)
-            instance = new ConfigManager(Glyphs.getInstance());
-
-        return instance;
+        return instance == null ? instance = new ConfigManager(Glyphs.getInstance()) : instance;
     }
 
     private Map<String, File> files;
@@ -29,6 +26,7 @@ public class ConfigManager {
 
         init("config", plugin);
         init("menus", plugin);
+        init("lang", plugin);
     }
 
     private void init(String fileName, Plugin plugin) {

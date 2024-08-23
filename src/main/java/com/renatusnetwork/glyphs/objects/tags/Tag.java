@@ -34,22 +34,22 @@ public class Tag {
             return new Builder();
         }
 
-        public Builder setId(UUID id) {
+        public Builder id(UUID id) {
             this.id = id;
             return this;
         }
 
-        public Builder setName(String name) {
+        public Builder name(String name) {
             this.name = name;
             return this;
         }
 
-        public Builder setDisplay(String display) {
+        public Builder display(String display) {
             this.display = display;
             return this;
         }
 
-        public Builder setCreatorName(String creatorName) {
+        public Builder creatorName(String creatorName) {
             this.creatorName = creatorName;
             return this;
         }

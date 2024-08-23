@@ -1,0 +1,18 @@
+test:
+  page_count: 2
+  '0':
+    title: "Test 1"
+    size: 54
+    '0':
+      material: TORCH
+      title: "&ctorch"
+      lore:
+        - "The torch"
+  '1':
+    title: "Test 2"
+    size: 54
+    '0':
+      material: TORCH
+      title: "&ctorch 2"
+      lore:
+        - "The torch"

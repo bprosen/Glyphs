@@ -11,10 +11,7 @@ public class TagsManager {
     private static TagsManager instance;
 
     public static TagsManager getInstance() {
-        if (instance == null)
-            instance = new TagsManager();
-
-        return instance;
+        return instance == null ? instance = new TagsManager() : instance;
     }
 
     private HashMap<String, Tag> tags;
@@ -30,11 +27,20 @@ public class TagsManager {
 
         results.forEach(result -> tags.put(result.get("name"),
                 Tag.Builder.create()
-                    .setName(result.get("name"))
-                    .setDisplay(result.get("display"))
-                    .setCreatorName(result.get("creator_name"))
+                    .name(result.get("name"))
+                    .display(result.get("display"))
+                    .creatorName(result.get("creator_name"))
                     .build()
         ));
+    }
+
+    public boolean exists(String name) {
+        return tags.containsKey(name);
+    }
+
+    public void create(String name, String creator) {
+        tags.put(name, Tag.Builder.create().name(name).creatorName(creator).build());
+        TagsUtils.createTag(name, creator);
     }
 
     public boolean add(String name) {
@@ -42,9 +48,9 @@ public class TagsManager {
 
         return tags.put(name,
                 Tag.Builder.create()
-                    .setName(name)
-                    .setDisplay(results.get("display"))
-                    .setCreatorName(results.get("creator_name"))
+                    .name(name)
+                    .display(results.get("display"))
+                    .creatorName(results.get("creator_name"))
                     .build()
         ) == null;
     }

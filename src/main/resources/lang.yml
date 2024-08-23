@@ -1,0 +1,3 @@
+player_offline: "&4$1&c is offline"
+tag_exists: "&cThe tag &4$1 &calready exists"
+tag_created: "&7The tag &a$1 &7has been created"

@@ -1,7 +1,7 @@
 package com.renatusnetwork.glyphs.storage;
 
 import com.renatusnetwork.glyphs.Glyphs;
-import com.renatusnetwork.glyphs.utils.ConfigUtils;
+import com.renatusnetwork.glyphs.utils.config.ConfigUtils;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.configuration.file.FileConfiguration;

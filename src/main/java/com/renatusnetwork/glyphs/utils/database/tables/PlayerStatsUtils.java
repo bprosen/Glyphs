@@ -17,7 +17,7 @@ public class PlayerStatsUtils {
         );
     }
 
-    public static HashSet<Tag> getCurrentTags(UUID uuid) {
+    public static HashSet<Tag> getOwnedTags(UUID uuid) {
         HashSet<Tag> tags = new HashSet<>();
 
         List<HashMap<String, String>> results = DatabaseUtils.getResults(DatabaseManager.OWNED_TAGS_TABLE, "*", "WHERE player_uuid=?", uuid);
