@@ -58,7 +58,7 @@ public class Tables {
     public static void createTags() {
         DatabaseUtils.runAync("CREATE TABLE " + DatabaseManager.TAGS_TABLE + " (" +
                 "name VARCHAR(20) NOT NULL, " +
-                "display VARCHAR(100) DEFAULT NULL, " +
+                "title VARCHAR(100) DEFAULT NULL, " +
                 "creator_name VARCHAR(16) NOT NULL, " +
                 "PRIMARY KEY(name)"
         );

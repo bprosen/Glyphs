@@ -1,12 +1,11 @@
 package com.renatusnetwork.glyphs;
 
-import com.renatusnetwork.glyphs.commands.TagsCMD;
+import com.renatusnetwork.glyphs.commands.tags.Tags;
 import com.renatusnetwork.glyphs.listeners.ChatListener;
 import com.renatusnetwork.glyphs.listeners.InventoryListener;
 import com.renatusnetwork.glyphs.listeners.JoinQuitListener;
 import com.renatusnetwork.glyphs.managers.DatabaseManager;
 import com.renatusnetwork.glyphs.utils.config.LangUtils;
-import org.bukkit.event.world.ChunkEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
@@ -50,6 +49,6 @@ public class Glyphs extends JavaPlugin {
     }
 
     private void registerCommands() {
-        getCommand("tags").setExecutor(new TagsCMD());
+        getCommand("tags").setExecutor(new Tags());
     }
 }

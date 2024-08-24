@@ -19,4 +19,12 @@ public class TagsUtils {
     public static void createTag(String name, String creator) {
         DatabaseUtils.runAync("INSERT INTO " + DatabaseManager.TAGS_TABLE + " (name, creator_name) VALUES (?, ?)", name, creator);
     }
+
+    public static void deleteTag(String name) {
+        DatabaseUtils.runAync("DELETE FROM " + DatabaseManager.TAGS_TABLE + " WHERE name=?", name);
+    }
+
+    public static void setTitle(String name, String title) {
+        DatabaseUtils.runAync("UPDATE " + DatabaseManager.TAGS_TABLE + " SET title=? WHERE name=?", title, name);
+    }
 }

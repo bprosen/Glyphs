@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import java.util.HashSet;
+import java.util.UUID;
 
 public class PlayerStats {
 
@@ -19,6 +20,14 @@ public class PlayerStats {
         this.player = player;
         this.currentTag = currentTag;
         this.ownedTags = ownedTags;
+    }
+
+    public UUID getUUID() {
+        return player.getUniqueId();
+    }
+
+    public void setCurrentTag(Tag currentTag) {
+        this.currentTag = currentTag;
     }
 
     public Tag getCurrentTag() {

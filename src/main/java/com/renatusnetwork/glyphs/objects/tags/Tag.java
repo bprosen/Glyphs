@@ -4,39 +4,39 @@ import java.util.UUID;
 
 public class Tag {
 
-    private UUID id;
     private String name;
-    private String display;
+    private String title;
     private String creatorName;
 
-    public Tag(UUID id, String name, String display, String creatorName) {
-        this.id = id;
+    public Tag(String name, String title, String creatorName) {
         this.name = name;
-        this.display = display;
+        this.title = title;
         this.creatorName = creatorName;
     }
 
-    public String getDisplay() {
-        return display;
+    public String getName() {
+        return name;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return title;
     }
 
     public boolean equals(Tag other) {
-        return other != null && id.equals(other.id);
+        return other != null && name.equals(other.name);
     }
 
     public static class Builder {
-        private UUID id;
         private String name;
-        private String display;
+        private String title;
         private String creatorName;
 
         public static Builder create() {
             return new Builder();
-        }
-
-        public Builder id(UUID id) {
-            this.id = id;
-            return this;
         }
 
         public Builder name(String name) {
@@ -44,8 +44,8 @@ public class Tag {
             return this;
         }
 
-        public Builder display(String display) {
-            this.display = display;
+        public Builder title(String title) {
+            this.title = title;
             return this;
         }
 
@@ -55,7 +55,7 @@ public class Tag {
         }
 
         public Tag build() {
-            return new Tag(id, name, display, creatorName);
+            return new Tag(name, title, creatorName);
         }
     }
 }

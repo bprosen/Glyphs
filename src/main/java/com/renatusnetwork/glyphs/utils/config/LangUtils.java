@@ -9,23 +9,27 @@ public class LangUtils {
 
     public static String player_offline;
     public static String tag_exists;
+    public static String tag_not_exists;
     public static String tag_created;
+    public static String tag_deleted;
+    public static String tag_set;
+    public static String tag_set_title;
 
     public static void load() {
         FileConfiguration langConfig = ConfigManager.getInstance().get("lang");
 
         player_offline = langConfig.getString("player_offline");
         tag_exists = langConfig.getString("tag_exists");
+        tag_not_exists = langConfig.getString("tag_not_exists");
         tag_created = langConfig.getString("tag_created");
+        tag_deleted = langConfig.getString("tag_deleted");
+        tag_set = langConfig.getString("tag_set");
+        tag_set_title = langConfig.getString("tag_set_title");
     }
 
-    public static String parse(String input, String replacement) {
-        return ChatUtils.color(input.replace("$1", replacement));
-    }
-
-    public static String parseString(String input, List<String> replacements) {
-        for (int i = 0; i < replacements.size(); i++) {
-            input = input.replace("$" + (i + 1), replacements.get(i));
+    public static String parse(String input, String... replacements) {
+        for (int i = 0; i < replacements.length; i++) {
+            input = input.replace("$" + (i + 1), replacements[i]);
         }
 
         return ChatUtils.color(input);

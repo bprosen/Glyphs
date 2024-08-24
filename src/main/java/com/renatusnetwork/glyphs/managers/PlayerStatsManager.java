@@ -43,4 +43,9 @@ public class PlayerStatsManager {
     public boolean remove(Player player) {
         return playerStatsMap.remove(player) != null;
     }
+
+    public void setTag(PlayerStats playerStats, Tag tag) {
+        playerStats.setCurrentTag(tag);
+        PlayerStatsUtils.setCurrentTag(playerStats.getUUID(), tag.getName());
+    }
 }

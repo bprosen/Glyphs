@@ -28,7 +28,7 @@ public class TagsManager {
         results.forEach(result -> tags.put(result.get("name"),
                 Tag.Builder.create()
                     .name(result.get("name"))
-                    .display(result.get("display"))
+                    .title(result.get("display"))
                     .creatorName(result.get("creator_name"))
                     .build()
         ));
@@ -43,13 +43,18 @@ public class TagsManager {
         TagsUtils.createTag(name, creator);
     }
 
+    public void delete(String name) {
+        tags.remove(name);
+        TagsUtils.deleteTag(name);
+    }
+
     public boolean add(String name) {
         HashMap<String, String> results = TagsUtils.getTag(name);
 
         return tags.put(name,
                 Tag.Builder.create()
                     .name(name)
-                    .display(results.get("display"))
+                    .title(results.get("title"))
                     .creatorName(results.get("creator_name"))
                     .build()
         ) == null;
@@ -57,5 +62,10 @@ public class TagsManager {
 
     public Tag getTag(String name) {
         return tags.get(name);
+    }
+
+    public void setTitle(String name, String title) {
+        tags.get(name).setTitle(title);
+
     }
 }

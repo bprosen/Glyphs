@@ -1,3 +1,7 @@
 player_offline: "&4$1&c is offline"
 tag_exists: "&cThe tag &4$1 &calready exists"
+tag_not_exists: "&cThe tag &4$1 &cdoes not exist"
 tag_created: "&7The tag &a$1 &7has been created"
+tag_deleted: "&7The tag &a$1 &7has been deleted"
+tag_set: "&a$1&7's tag is now set to &a$2"
+tag_set_title: "&a$1&7's title is now set to &a$2"
