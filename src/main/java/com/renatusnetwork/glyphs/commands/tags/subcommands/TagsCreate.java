@@ -9,7 +9,7 @@ public class TagsCreate implements CommandHandler {
 
     @Override
     public boolean handle(CommandSender sender, String[] a) {
-        if (a.length == 2 && a[0].equalsIgnoreCase("create")) {
+        if (a.length == 2) {
             TagsManager tagsManager = TagsManager.getInstance();
             String tagName = a[1].toLowerCase();
 

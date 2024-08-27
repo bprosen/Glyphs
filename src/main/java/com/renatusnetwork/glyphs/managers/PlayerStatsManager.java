@@ -48,4 +48,9 @@ public class PlayerStatsManager {
         playerStats.setCurrentTag(tag);
         PlayerStatsUtils.setCurrentTag(playerStats.getUUID(), tag.getName());
     }
+
+    public void resetTag(PlayerStats playerStats) {
+        playerStats.resetCurrentTag();
+        PlayerStatsUtils.resetCurrentTag(playerStats.getUUID());
+    }
 }

@@ -30,6 +30,10 @@ public class PlayerStats {
         this.currentTag = currentTag;
     }
 
+    public void resetCurrentTag() {
+        this.currentTag = null;
+    }
+
     public Tag getCurrentTag() {
         return currentTag;
     }

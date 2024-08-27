@@ -29,4 +29,8 @@ public class PlayerStatsUtils {
     public static void setCurrentTag(UUID uuid, String tagName) {
         DatabaseUtils.runAync("UPDATE " + DatabaseManager.PLAYERS_TABLE + " SET current_tag=? WHERE uuid=?", tagName, uuid.toString());
     }
+
+    public static void resetCurrentTag(UUID uuid) {
+        DatabaseUtils.runAync("UPDATE " + DatabaseManager.PLAYERS_TABLE + " SET current_tag=NULL WHERE uuid=?", uuid.toString());
+    }
 }

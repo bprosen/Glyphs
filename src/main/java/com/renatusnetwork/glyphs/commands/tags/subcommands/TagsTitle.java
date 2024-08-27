@@ -13,7 +13,7 @@ public class TagsTitle implements CommandHandler {
     @Override
     public boolean handle(CommandSender sender, String[] a) {
 
-        if (a.length >= 3 && a[0].equalsIgnoreCase("title")) {
+        if (a.length >= 3) {
             TagsManager tagsManager = TagsManager.getInstance();
             String tagName = a[1].toLowerCase();
             String title = Arrays.stream(a, 2, a.length).collect(Collectors.joining(" "));
