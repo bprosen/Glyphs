@@ -6,6 +6,8 @@ import com.renatusnetwork.glyphs.commands.tags.subcommands.TagsDelete;
 import com.renatusnetwork.glyphs.commands.tags.subcommands.TagsSet;
 import com.renatusnetwork.glyphs.commands.tags.subcommands.TagsTitle;
 import com.renatusnetwork.glyphs.utils.ChatUtils;
+import com.renatusnetwork.glyphs.utils.config.ConfigUtils;
+import com.renatusnetwork.glyphs.utils.config.LangUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -33,11 +35,6 @@ public class Tags implements CommandExecutor {
     }
 
     private void sendHelp(CommandSender sender) {
-        sender.sendMessage(ChatUtils.color("&2&lTags Help"));
-        sender.sendMessage(ChatUtils.color(" &8→ &a/tags create (tagName)"));
-        sender.sendMessage(ChatUtils.color(" &8→ &a/tags delete (tagName)"));
-        sender.sendMessage(ChatUtils.color(" &8→ &a/tags set (playerName) (tagName)"));
-        sender.sendMessage(ChatUtils.color(" &8→ &a/tags title (tagName) (title)  &7Title can have spaces"));
-        sender.sendMessage(ChatUtils.color(" &8→ &a/tags help"));
+        LangUtils.tags_command_help.forEach(message -> sender.sendMessage(ChatUtils.color(message)));
     }
 }

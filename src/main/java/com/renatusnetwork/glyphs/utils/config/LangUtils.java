@@ -14,6 +14,7 @@ public class LangUtils {
     public static String tag_deleted;
     public static String tag_set;
     public static String tag_set_title;
+    public static List<String> tags_command_help;
 
     public static void load() {
         FileConfiguration langConfig = ConfigManager.getInstance().get("lang");
@@ -25,6 +26,7 @@ public class LangUtils {
         tag_deleted = langConfig.getString("tag_deleted");
         tag_set = langConfig.getString("tag_set");
         tag_set_title = langConfig.getString("tag_set_title");
+        tags_command_help = langConfig.getStringList("tags_command_help");
     }
 
     public static String parse(String input, String... replacements) {
