@@ -27,6 +27,7 @@ public class PlayerStatsManager {
     }
 
     public boolean add(Player player) {
+        PlayerStatsUtils.insert(player.getUniqueId(), player.getName());
 
         Tag currentTag = PlayerStatsUtils.getCurrentTag(player.getUniqueId());
         HashSet<Tag> ownedTags = PlayerStatsUtils.getOwnedTags(player.getUniqueId());

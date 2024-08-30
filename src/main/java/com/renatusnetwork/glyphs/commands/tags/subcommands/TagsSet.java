@@ -22,16 +22,17 @@ public class TagsSet implements CommandHandler {
 
             if (player == null) {
                 sender.sendMessage(LangUtils.parse(LangUtils.player_offline, a[2]));
-                return false;
+                return true;
             }
 
-            if (!tagsManager.exists(tagName)) {
+            Tag tag = tagsManager.get(tagName);
+
+            if (tag == null) {
                 sender.sendMessage(LangUtils.parse(LangUtils.tag_not_exists, tagName));
-                return false;
+                return true;
             }
 
             PlayerStats playerStats = PlayerStatsManager.getInstance().get(player);
-            Tag tag = tagsManager.getTag(tagName);
 
             PlayerStatsManager.getInstance().setTag(playerStats, tag);
             sender.sendMessage(LangUtils.parse(LangUtils.tag_set, player.getDisplayName(), tagName));

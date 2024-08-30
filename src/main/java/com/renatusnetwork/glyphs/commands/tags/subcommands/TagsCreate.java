@@ -15,7 +15,7 @@ public class TagsCreate implements CommandHandler {
 
             if (tagsManager.exists(tagName)) {
                 sender.sendMessage(LangUtils.parse(LangUtils.tag_exists, tagName));
-                return false;
+                return true;
             }
 
             tagsManager.create(tagName, sender.getName());

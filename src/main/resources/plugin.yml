@@ -3,3 +3,8 @@ description: "${project.description}"
 main: com.renatusnetwork.glyphs.Glyphs
 version: ${project.version}
 author: [xxBen]
+
+commands:
+  tags:
+    aliases: [glyphs]
+    description: Glyphs Tags Command

@@ -20,10 +20,7 @@ public class ChatListener implements Listener {
 
         if (playerStats != null) {
             Tag currentTag = playerStats.getCurrentTag();
-
-            if (currentTag != null) {
-                event.setFormat(event.getFormat().replace("{glyphs_tag_display}", ChatUtils.color(currentTag.getDisplay())));
-            }
+            event.setFormat(event.getFormat().replace("{glyphs_tag_title}", currentTag != null ? ChatUtils.color(currentTag.getTitle()) : ""));
         }
     }
 }

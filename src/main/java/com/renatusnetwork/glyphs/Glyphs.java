@@ -5,6 +5,8 @@ import com.renatusnetwork.glyphs.listeners.ChatListener;
 import com.renatusnetwork.glyphs.listeners.InventoryListener;
 import com.renatusnetwork.glyphs.listeners.JoinQuitListener;
 import com.renatusnetwork.glyphs.managers.DatabaseManager;
+import com.renatusnetwork.glyphs.managers.PlayerStatsManager;
+import com.renatusnetwork.glyphs.managers.TagsManager;
 import com.renatusnetwork.glyphs.utils.config.LangUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,6 +30,7 @@ public class Glyphs extends JavaPlugin {
         instance = this;
         log = getLogger();
 
+        registerManagers();
         registerListeners();
         registerCommands();
 
@@ -40,6 +43,12 @@ public class Glyphs extends JavaPlugin {
     @Override
     public void onDisable() {
         log.info("Glyphs disabled");
+    }
+
+    private void registerManagers() {
+        // Trigger init steps to avoid having it happen on load
+        PlayerStatsManager.getInstance();
+        TagsManager.getInstance();
     }
 
     private void registerListeners() {

@@ -33,7 +33,7 @@ public class Tags implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] a) {
-        if (sender.isOp() && a.length > 0 && (!subCommands.containsKey(a[1]) || subCommands.get(a[1]).handle(sender, a))) {
+        if (sender.isOp() && (a.length == 0 || !(subCommands.containsKey(a[0]) && subCommands.get(a[0]).handle(sender, a)))) {
             sendHelp(sender);
         }
         return false;

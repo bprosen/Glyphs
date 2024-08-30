@@ -28,7 +28,7 @@ public class TagsManager {
         results.forEach(result -> tags.put(result.get("name"),
                 Tag.Builder.create()
                     .name(result.get("name"))
-                    .title(result.get("display"))
+                    .title(result.get("title"))
                     .creatorName(result.get("creator_name"))
                     .build()
         ));
@@ -60,12 +60,12 @@ public class TagsManager {
         ) == null;
     }
 
-    public Tag getTag(String name) {
+    public Tag get(String name) {
         return tags.get(name);
     }
 
-    public void setTitle(String name, String title) {
-        tags.get(name).setTitle(title);
-
+    public void setTitle(Tag tag, String title) {
+        tag.setTitle(title);
+        TagsUtils.setTitle(tag.getName(), title);
     }
 }

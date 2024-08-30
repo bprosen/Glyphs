@@ -15,7 +15,7 @@ public class TagsDelete implements CommandHandler {
 
             if (!tagsManager.exists(tagName)) {
                 sender.sendMessage(LangUtils.parse(LangUtils.tag_not_exists, tagName));
-                return false;
+                return true;
             }
 
             tagsManager.delete(tagName);

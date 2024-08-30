@@ -17,7 +17,7 @@ public class TagsReset implements CommandHandler {
 
             if (player == null) {
                 sender.sendMessage(LangUtils.parse(LangUtils.player_offline, a[2]));
-                return false;
+                return true;
             }
 
             PlayerStats playerStats = PlayerStatsManager.getInstance().get(player);
