@@ -1,4 +1,4 @@
-test:
+tags:
   page_count: 2
   '0':
     title: "Test 1"

@@ -1,5 +1,6 @@
 package com.renatusnetwork.glyphs.managers;
 
+import com.renatusnetwork.glyphs.Glyphs;
 import com.renatusnetwork.glyphs.listeners.InventoryListener;
 import com.renatusnetwork.glyphs.objects.menus.Menu;
 import com.renatusnetwork.glyphs.objects.menus.MenuHolder;
@@ -23,6 +24,7 @@ public class MenuManager {
 
     private MenuManager() {
         menus = MenusUtils.getMenus();
+        menus.keySet().forEach(key -> Glyphs.getLog().info("menu " + key));
     }
 
     public Menu get(String menuName) {
@@ -31,13 +33,11 @@ public class MenuManager {
 
     public void open(PlayerStats playerStats, Menu menu, int pageNumber) {
         pageNumber = Math.max(0, pageNumber);
-
         MenuPage menuPage = menu.getPage(pageNumber);
-        playerStats.setOpenedMenu(menuPage);
-
         Inventory inventory = Bukkit.createInventory(new MenuHolder(menuPage), menuPage.getSize(), menuPage.getTitleColored());
 
         if (inventory != null) {
+            menuPage.parseInventory(inventory);
             playerStats.openInventory(inventory);
         }
     }

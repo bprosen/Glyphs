@@ -53,7 +53,7 @@ public class MenusUtils {
             String title = config.getString(menuName + "." + page + ".title");
             int size = config.getInt(menuName + "." + page + ".size");
 
-            return MenuPage.Builder.create().menu(menu).title(title).size(size).build();
+            return MenuPage.Builder.create().menu(menu).title(title).size(size).number(page).build();
         }
         return null;
     }
@@ -62,7 +62,11 @@ public class MenusUtils {
         HashMap<Integer, MenuItem> items = new HashMap<>();
 
         for (int i = 0; i < page.getSize(); i++) {
-            items.put(i, getMenuItem(page, i));
+            MenuItem menuItem = getMenuItem(page, i);
+
+            if (menuItem != null) {
+                items.put(i, menuItem);
+            }
         }
 
         return items;
@@ -71,11 +75,12 @@ public class MenusUtils {
     public static MenuItem getMenuItem(MenuPage page, int slot) {
         FileConfiguration config = getMenusConfig();
         String menuName = page.getMenu().getName();
+        int pageNumber = page.getNumber();
 
-        if (config.isConfigurationSection(menuName + "." + page + "." + slot)) {
-            Material material = Material.matchMaterial(config.getString(menuName + "." + page + "." + slot + ".material"));
-            String title = config.getString(menuName + "." + page + "." + slot + ".title");
-            List<String> lore = config.getStringList(menuName + "." + page + "." + slot + ".lore");
+        if (config.isConfigurationSection(menuName + "." + pageNumber + "." + slot)) {
+            Material material = Material.matchMaterial(config.getString(menuName + "." + pageNumber + "." + slot + ".material"));
+            String title = config.getString(menuName + "." + pageNumber + "." + slot + ".title");
+            List<String> lore = config.getStringList(menuName + "." + pageNumber + "." + slot + ".lore");
 
             ItemStack itemStack = new ItemStack(material);
             ItemMeta meta = itemStack.getItemMeta();

@@ -14,7 +14,6 @@ public class PlayerStats {
     private Player player;
     private Tag currentTag;
     private HashSet<Tag> ownedTags;
-    private MenuPage openedMenu;
 
     public PlayerStats(Player player, Tag currentTag, HashSet<Tag> ownedTags) {
         this.player = player;
@@ -36,22 +35,6 @@ public class PlayerStats {
 
     public Tag getCurrentTag() {
         return currentTag;
-    }
-
-    public boolean isInMenu() {
-        return openedMenu != null;
-    }
-
-    public Menu getOpenMenu() {
-        return openedMenu != null ? openedMenu.getMenu() : null;
-    }
-
-    public void setOpenedMenu(MenuPage openedMenu) {
-        this.openedMenu = openedMenu;
-    }
-
-    public void resetOpenedMenu() {
-        this.openedMenu = null;
     }
 
     public void openInventory(Inventory inventory) {

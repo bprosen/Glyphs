@@ -4,3 +4,4 @@ database:
   database: ""
   username: ""
   password: ""
+main_menu_name: "tags"
