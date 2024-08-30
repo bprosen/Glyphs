@@ -40,10 +40,7 @@ public class MenuPage {
     }
 
     public void parseInventory(Inventory inventory) {
-        for (Map.Entry<Integer, MenuItem> entry : items.entrySet()) {
-            Glyphs.getLog().info("setting slot " + entry.getKey() + " to " + entry.getValue());
-            inventory.setItem(entry.getKey(), entry.getValue().getItem());
-        }
+        items.forEach((key, value) -> inventory.setItem(key, value.getItem()));
     }
 
     public static class Builder {
