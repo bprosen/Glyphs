@@ -2,6 +2,7 @@ package com.renatusnetwork.glyphs.objects.menus;
 
 import com.renatusnetwork.glyphs.utils.config.MenusUtils;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 public class Menu {
@@ -26,6 +27,10 @@ public class Menu {
 
     public int getPageCount() {
         return pageCount;
+    }
+
+    public Collection<MenuPage> getPages() {
+        return pages.values();
     }
 
     public static class Builder {

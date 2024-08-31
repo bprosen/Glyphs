@@ -1,5 +1,7 @@
-package com.renatusnetwork.glyphs.objects.menus;
+package com.renatusnetwork.glyphs.objects.menus.items;
 
+import com.renatusnetwork.glyphs.objects.menus.MenuPage;
+import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import org.bukkit.inventory.ItemStack;
 
 public class MenuItem {
@@ -18,6 +20,10 @@ public class MenuItem {
 
     public ItemStack getItem() {
         return item;
+    }
+
+    public void click(PlayerStats playerStats) {
+        // Empty body
     }
 
     public static class Builder {

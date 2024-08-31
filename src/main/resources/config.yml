@@ -5,3 +5,7 @@ database:
   username: ""
   password: ""
 main_menu_name: "tags"
+menu_default_material: BEDROCK
+menu_acquired_tag_material: NAME_TAG
+menu_missing_tag_material: BARRIER
+permission_node_prefix: "glyphs.tag."

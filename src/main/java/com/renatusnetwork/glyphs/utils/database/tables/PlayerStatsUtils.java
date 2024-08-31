@@ -22,15 +22,6 @@ public class PlayerStatsUtils {
         );
     }
 
-    public static HashSet<Tag> getOwnedTags(UUID uuid) {
-        HashSet<Tag> tags = new HashSet<>();
-
-        List<HashMap<String, String>> results = DatabaseUtils.getResults(DatabaseManager.OWNED_TAGS_TABLE, "*", "WHERE player_uuid=?", uuid.toString());
-        results.forEach(result -> tags.add(TagsManager.getInstance().get(result.get("owned_tag"))));
-
-        return tags;
-    }
-
     public static void setCurrentTag(UUID uuid, String tagName) {
         DatabaseUtils.runAync("UPDATE " + DatabaseManager.PLAYERS_TABLE + " SET current_tag=? WHERE uuid=?", tagName, uuid.toString());
     }

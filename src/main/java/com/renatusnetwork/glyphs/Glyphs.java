@@ -32,12 +32,13 @@ public class Glyphs extends JavaPlugin {
         instance = this;
         log = getLogger();
 
+        LangUtils.load();
+        ConfigUtils.load();
+
         registerManagers();
         registerListeners();
         registerCommands();
 
-        LangUtils.load();
-        ConfigUtils.load();
         DatabaseManager.getInstance().initTables();
 
         log.info("Glyphs enabled");

@@ -3,6 +3,7 @@ package com.renatusnetwork.glyphs.objects.players;
 import com.renatusnetwork.glyphs.objects.menus.Menu;
 import com.renatusnetwork.glyphs.objects.menus.MenuPage;
 import com.renatusnetwork.glyphs.objects.tags.Tag;
+import com.renatusnetwork.glyphs.utils.config.ConfigUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -13,12 +14,14 @@ public class PlayerStats {
 
     private Player player;
     private Tag currentTag;
-    private HashSet<Tag> ownedTags;
 
-    public PlayerStats(Player player, Tag currentTag, HashSet<Tag> ownedTags) {
+    public PlayerStats(Player player, Tag currentTag) {
         this.player = player;
         this.currentTag = currentTag;
-        this.ownedTags = ownedTags;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
     public UUID getUUID() {
@@ -41,10 +44,13 @@ public class PlayerStats {
         player.openInventory(inventory);
     }
 
+    public boolean hasTag(Tag tag) {
+        return player.hasPermission(ConfigUtils.permission_node_prefix + tag.getName());
+    }
+
     public static class Builder {
         private Player player;
         private Tag currentTag;
-        private HashSet<Tag> ownedTags;
 
         public static Builder create() {
             return new Builder();
@@ -60,13 +66,8 @@ public class PlayerStats {
             return this;
         }
 
-        public Builder ownedTags(HashSet<Tag> ownedTags) {
-            this.ownedTags = ownedTags;
-            return this;
-        }
-
         public PlayerStats build() {
-            return new PlayerStats(player, currentTag, ownedTags);
+            return new PlayerStats(player, currentTag);
         }
     }
 }

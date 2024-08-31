@@ -5,10 +5,12 @@ import com.renatusnetwork.glyphs.listeners.InventoryListener;
 import com.renatusnetwork.glyphs.objects.menus.Menu;
 import com.renatusnetwork.glyphs.objects.menus.MenuHolder;
 import com.renatusnetwork.glyphs.objects.menus.MenuPage;
+import com.renatusnetwork.glyphs.objects.menus.items.TagItem;
 import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import com.renatusnetwork.glyphs.utils.config.MenusUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
@@ -24,7 +26,6 @@ public class MenuManager {
 
     private MenuManager() {
         menus = MenusUtils.getMenus();
-        menus.keySet().forEach(key -> Glyphs.getLog().info("menu " + key));
     }
 
     public Menu get(String menuName) {
@@ -37,7 +38,17 @@ public class MenuManager {
         Inventory inventory = Bukkit.createInventory(new MenuHolder(menuPage), menuPage.getSize(), menuPage.getTitleColored());
 
         if (inventory != null) {
-            menuPage.parseInventory(inventory);
+            menuPage.getItems().forEach((key, value) ->  {
+                ItemStack itemStack = value.getItem();
+
+                if (value instanceof TagItem) {
+                    TagItem tagItem = (TagItem) value;
+                    itemStack = MenusUtils.parseTagItem(tagItem, playerStats);
+                }
+
+                inventory.setItem(key, itemStack);
+            });
+
             playerStats.openInventory(inventory);
         }
     }

@@ -1,13 +1,11 @@
 package com.renatusnetwork.glyphs.objects.menus;
 
-import com.renatusnetwork.glyphs.Glyphs;
+import com.renatusnetwork.glyphs.objects.menus.items.MenuItem;
 import com.renatusnetwork.glyphs.utils.ChatUtils;
 import com.renatusnetwork.glyphs.utils.config.MenusUtils;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class MenuPage {
 
@@ -29,6 +27,10 @@ public class MenuPage {
         return menu;
     }
 
+    public MenuItem getItem(int slot) {
+        return items.get(slot);
+    }
+
     public int getSize() {
         return size;
     }
@@ -39,9 +41,9 @@ public class MenuPage {
         return ChatUtils.color(title);
     }
 
-    public void parseInventory(Inventory inventory) {
-        items.forEach((key, value) -> inventory.setItem(key, value.getItem()));
-    }
+    public String getTitle() { return title; }
+
+    public HashMap<Integer, MenuItem> getItems() { return items; }
 
     public static class Builder {
         private Menu menu;

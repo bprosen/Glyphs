@@ -30,12 +30,10 @@ public class Tables {
     public static void createTables() {
         createPlayers();
         createTags();
-        createOwnedTags();
     }
 
     public static void createKeys() {
         createPlayersKeys();
-        createOwnedTagsKeys();
     }
 
     public static void createPlayers() {
@@ -61,26 +59,6 @@ public class Tables {
                 "title VARCHAR(100) DEFAULT NULL, " +
                 "creator_name VARCHAR(16) NOT NULL, " +
                 "PRIMARY KEY(name))"
-        );
-    }
-
-    public static void createOwnedTags() {
-        DatabaseUtils.run("CREATE TABLE " + DatabaseManager.OWNED_TAGS_TABLE + " (" +
-                "player_uuid VARCHAR(20) NOT NULL, " +
-                "tag_name VARCHAR(20) NOT NULL, " +
-                "PRIMARY KEY (player_uuid, tag_name))"
-        );
-    }
-
-    public static void createOwnedTagsKeys() {
-        DatabaseUtils.run("ALTER TABLE " + DatabaseManager.OWNED_TAGS_TABLE + " ADD CONSTRAINT " + DatabaseManager.OWNED_TAGS_TABLE + "_current_tag_fk " +
-                "FOREIGN KEY(player_uuid) REFERENCES " + DatabaseManager.PLAYERS_TABLE + "(uuid)" +
-                "ON UPDATE CASCADE " +
-                "ON DELETE CASCADE, " +
-                "ADD CONSTRAINT " + DatabaseManager.OWNED_TAGS_TABLE + "_tag_name_fk " +
-                "FOREIGN KEY(tag_name) REFERENCES " + DatabaseManager.TAGS_TABLE + "(name)" +
-                "ON UPDATE CASCADE " +
-                "ON DELETE CASCADE"
         );
     }
 }

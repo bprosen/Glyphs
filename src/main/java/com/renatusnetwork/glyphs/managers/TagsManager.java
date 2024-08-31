@@ -29,7 +29,7 @@ public class TagsManager {
                 Tag.Builder.create()
                     .name(result.get("name"))
                     .title(result.get("title"))
-                    .creatorName(result.get("creator_name"))
+                    .creator(result.get("creator_name"))
                     .build()
         ));
     }
@@ -39,7 +39,7 @@ public class TagsManager {
     }
 
     public void create(String name, String creator) {
-        tags.put(name, Tag.Builder.create().name(name).creatorName(creator).build());
+        tags.put(name, Tag.Builder.create().name(name).creator(creator).build());
         TagsUtils.createTag(name, creator);
     }
 
@@ -55,7 +55,7 @@ public class TagsManager {
                 Tag.Builder.create()
                     .name(name)
                     .title(results.get("title"))
-                    .creatorName(results.get("creator_name"))
+                    .creator(results.get("creator_name"))
                     .build()
         ) == null;
     }

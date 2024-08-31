@@ -8,6 +8,13 @@ tags:
       title: "&ctorch"
       lore:
         - "The torch"
+    '1':
+      tag: test
+    '2':
+      material: PAPER
+      open:
+        menu: tags
+        page: 2
   '1':
     title: "Test 2"
     size: 54

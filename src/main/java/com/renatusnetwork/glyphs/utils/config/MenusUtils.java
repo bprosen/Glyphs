@@ -1,15 +1,24 @@
 package com.renatusnetwork.glyphs.utils.config;
 
+import com.renatusnetwork.glyphs.Glyphs;
 import com.renatusnetwork.glyphs.managers.ConfigManager;
+import com.renatusnetwork.glyphs.managers.MenuManager;
+import com.renatusnetwork.glyphs.managers.PlayerStatsManager;
+import com.renatusnetwork.glyphs.managers.TagsManager;
 import com.renatusnetwork.glyphs.objects.menus.Menu;
-import com.renatusnetwork.glyphs.objects.menus.MenuItem;
+import com.renatusnetwork.glyphs.objects.menus.items.MenuItem;
 import com.renatusnetwork.glyphs.objects.menus.MenuPage;
+import com.renatusnetwork.glyphs.objects.menus.items.OpenItem;
+import com.renatusnetwork.glyphs.objects.menus.items.TagItem;
+import com.renatusnetwork.glyphs.objects.players.PlayerStats;
+import com.renatusnetwork.glyphs.objects.tags.Tag;
 import com.renatusnetwork.glyphs.utils.ChatUtils;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -78,20 +87,63 @@ public class MenusUtils {
         int pageNumber = page.getNumber();
 
         if (config.isConfigurationSection(menuName + "." + pageNumber + "." + slot)) {
-            Material material = Material.matchMaterial(config.getString(menuName + "." + pageNumber + "." + slot + ".material"));
-            String title = config.getString(menuName + "." + pageNumber + "." + slot + ".title");
-            List<String> lore = config.getStringList(menuName + "." + pageNumber + "." + slot + ".lore");
+            String materialString = config.getString(menuName + "." + pageNumber + "." + slot + ".material");
 
+            Material material = materialString != null ? Material.matchMaterial(materialString) : ConfigUtils.menu_default_material;
             ItemStack itemStack = new ItemStack(material);
             ItemMeta meta = itemStack.getItemMeta();
 
-            meta.setDisplayName(ChatUtils.color(title));
-            meta.setLore(lore.stream().map(ChatUtils::color).collect(Collectors.toList()));
+            // Tag type
+            if (config.isSet(menuName + "." + pageNumber + "." + slot + ".tag")) {
+                return TagItem.Builder.create()
+                        .menuPage(page)
+                        .item(itemStack)
+                        .tag(TagsManager.getInstance().get(config.getString(menuName + "." + pageNumber + "." + slot + ".tag")))
+                        .build();
+            // Open type
+            } else if (config.isConfigurationSection(menuName + "." + pageNumber + "." + slot + ".open")) {
+                return OpenItem.Builder.create()
+                        .menuPage(page)
+                        .item(itemStack)
+                        .menu(config.getString(menuName + "." + pageNumber + "." + slot + ".open.menu"))
+                        .pageNumber(config.getInt(menuName + "." + pageNumber + "." + slot + ".open.page"))
+                        .build();
+            // Normal type
+            } else {
+                String title = config.getString(menuName + "." + pageNumber + "." + slot + ".title");
+                List<String> lore = config.getStringList(menuName + "." + pageNumber + "." + slot + ".lore");
 
-            itemStack.setItemMeta(meta);
+                meta.setDisplayName(ChatUtils.color(title));
+                meta.setLore(lore.stream().map(ChatUtils::color).collect(Collectors.toList()));
 
-            return MenuItem.Builder.create().menuPage(page).item(itemStack).build();
+                itemStack.setItemMeta(meta);
+
+                return MenuItem.Builder.create().menuPage(page).item(itemStack).build();
+            }
         }
         return null;
+    }
+
+    public static ItemStack parseTagItem(TagItem tagItem, PlayerStats playerStats) {
+        Tag tag = tagItem.getTag();
+        boolean hasTag = playerStats.hasTag(tag);
+
+        ItemStack item = new ItemStack(hasTag ? ConfigUtils.menu_acquired_tag_material : ConfigUtils.menu_missing_tag_material);
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName(ChatUtils.color(tag.getTitle() + "&7 Tag"));
+        meta.setLore(new ArrayList<String>() {{
+            add(ChatUtils.color(hasTag ? "&aYou have access to this tag" : "&cYou do not have access to this tag"));
+
+            if (playerStats.getPlayer().isOp()) {
+                add("");
+                add(ChatUtils.color("&a&oName: " + tag.getName()));
+                add(ChatUtils.color("&a&oCreator: " + tag.getCreator()));
+            }
+        }});
+
+        item.setItemMeta(meta);
+
+        return item;
     }
 }

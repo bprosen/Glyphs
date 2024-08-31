@@ -1,17 +1,19 @@
 package com.renatusnetwork.glyphs.objects.tags;
 
-import java.util.UUID;
-
 public class Tag {
 
     private String name;
     private String title;
-    private String creatorName;
+    private String creator;
 
-    public Tag(String name, String title, String creatorName) {
+    public Tag(String name, String title, String creator) {
         this.name = name;
         this.title = title;
-        this.creatorName = creatorName;
+        this.creator = creator;
+    }
+
+    public String getCreator() {
+        return creator;
     }
 
     public String getName() {
@@ -33,7 +35,7 @@ public class Tag {
     public static class Builder {
         private String name;
         private String title;
-        private String creatorName;
+        private String creator;
 
         public static Builder create() {
             return new Builder();
@@ -49,13 +51,13 @@ public class Tag {
             return this;
         }
 
-        public Builder creatorName(String creatorName) {
-            this.creatorName = creatorName;
+        public Builder creator(String creator) {
+            this.creator = creator;
             return this;
         }
 
         public Tag build() {
-            return new Tag(name, title, creatorName);
+            return new Tag(name, title, creator);
         }
     }
 }
