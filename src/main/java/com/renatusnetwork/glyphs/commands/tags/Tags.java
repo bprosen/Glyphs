@@ -5,7 +5,6 @@ import com.renatusnetwork.glyphs.commands.tags.subcommands.*;
 import com.renatusnetwork.glyphs.managers.MenuManager;
 import com.renatusnetwork.glyphs.managers.PlayerStatsManager;
 import com.renatusnetwork.glyphs.objects.players.PlayerStats;
-import com.renatusnetwork.glyphs.utils.ChatUtils;
 import com.renatusnetwork.glyphs.utils.config.ConfigUtils;
 import com.renatusnetwork.glyphs.utils.config.LangUtils;
 import org.bukkit.command.Command;
@@ -22,6 +21,8 @@ public class Tags implements CommandExecutor {
     public static final String SET_COMMAND_TEXT = "set";
     public static final String TITLE_COMMAND_TEXT = "title";
     public static final String RESET_COMMAND_TEXT = "reset";
+    public static final String REVEAL_COMMAND_TEXT = "reveal";
+    public static final String INFO_COMMAND_TEXT = "info";
 
     private HashMap<String, CommandHandler> subCommands;
 
@@ -32,6 +33,8 @@ public class Tags implements CommandExecutor {
             put(SET_COMMAND_TEXT, new TagsSet());
             put(TITLE_COMMAND_TEXT, new TagsTitle());
             put(RESET_COMMAND_TEXT, new TagsReset());
+            put(REVEAL_COMMAND_TEXT, new TagsReveal());
+            put(INFO_COMMAND_TEXT, new TagsInfo());
         }};
     }
 
@@ -53,6 +56,6 @@ public class Tags implements CommandExecutor {
     }
 
     private void sendHelp(CommandSender sender) {
-        ChatUtils.sendMessages((Player) sender, LangUtils.tags_command_help);
+        sender.sendMessage(LangUtils.tags_command_help);
     }
 }

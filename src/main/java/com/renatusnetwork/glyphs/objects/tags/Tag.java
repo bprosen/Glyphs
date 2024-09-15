@@ -5,11 +5,13 @@ public class Tag {
     private String name;
     private String title;
     private String creator;
+    private int creationDate;
 
-    public Tag(String name, String title, String creator) {
+    public Tag(String name, String title, String creator, int creationDate) {
         this.name = name;
         this.title = title;
         this.creator = creator;
+        this.creationDate = creationDate;
     }
 
     public String getCreator() {
@@ -28,14 +30,17 @@ public class Tag {
         return title;
     }
 
-    public boolean equals(Tag other) {
-        return other != null && name.equals(other.name);
+    public boolean hasTitle() { return title != null; }
+
+    public int getCreationDate() {
+        return creationDate;
     }
 
     public static class Builder {
         private String name;
         private String title;
         private String creator;
+        private int creationDate;
 
         public static Builder create() {
             return new Builder();
@@ -56,8 +61,13 @@ public class Tag {
             return this;
         }
 
+        public Builder creationDate(int creationDate) {
+            this.creationDate = creationDate;
+            return this;
+        }
+
         public Tag build() {
-            return new Tag(name, title, creator);
+            return new Tag(name, title, creator, creationDate);
         }
     }
 }

@@ -13,6 +13,7 @@ import com.renatusnetwork.glyphs.objects.menus.items.TagItem;
 import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import com.renatusnetwork.glyphs.objects.tags.Tag;
 import com.renatusnetwork.glyphs.utils.ChatUtils;
+import com.renatusnetwork.glyphs.utils.TimeUtils;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -139,6 +140,7 @@ public class MenusUtils {
                 add("");
                 add(ChatUtils.color("&a&oName: " + tag.getName()));
                 add(ChatUtils.color("&a&oCreator: " + tag.getCreator()));
+                add(ChatUtils.color("&a&oCreated At: " + TimeUtils.parseTime(tag.getCreationDate())));
             }
         }});
 

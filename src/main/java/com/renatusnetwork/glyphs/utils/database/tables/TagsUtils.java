@@ -16,8 +16,13 @@ public class TagsUtils {
         return DatabaseUtils.getResult(DatabaseManager.TAGS_TABLE, "*", "WHERE name=?", name);
     }
 
-    public static void createTag(String name, String creator) {
-        DatabaseUtils.runAync("INSERT INTO " + DatabaseManager.TAGS_TABLE + " (name, creator_name) VALUES (?, ?)", name, creator);
+    public static void createTag(String name, String creator, int creationDate) {
+        DatabaseUtils.runAync(
+                "INSERT INTO " + DatabaseManager.TAGS_TABLE + " " +
+                       "(name, creator_name, creation_date) " +
+                       "VALUES (?, ?, ?)",
+                        name, creator, creationDate
+        );
     }
 
     public static void deleteTag(String name) {

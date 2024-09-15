@@ -1,8 +1,8 @@
 package com.renatusnetwork.glyphs.managers;
 
 import com.renatusnetwork.glyphs.objects.tags.Tag;
+import com.renatusnetwork.glyphs.utils.ChatUtils;
 import com.renatusnetwork.glyphs.utils.database.tables.TagsUtils;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,6 +30,7 @@ public class TagsManager {
                     .name(result.get("name"))
                     .title(result.get("title"))
                     .creator(result.get("creator_name"))
+                    .creationDate(Integer.parseInt(result.get("creation_date")))
                     .build()
         ));
     }
@@ -39,8 +40,10 @@ public class TagsManager {
     }
 
     public void create(String name, String creator) {
-        tags.put(name, Tag.Builder.create().name(name).creator(creator).build());
-        TagsUtils.createTag(name, creator);
+        int creationDate = (int) (System.currentTimeMillis() / 1000);
+
+        tags.put(name, Tag.Builder.create().name(name).creator(creator).creationDate(creationDate).build());
+        TagsUtils.createTag(name, creator, creationDate);
     }
 
     public void delete(String name) {
@@ -48,20 +51,15 @@ public class TagsManager {
         TagsUtils.deleteTag(name);
     }
 
-    public boolean add(String name) {
-        HashMap<String, String> results = TagsUtils.getTag(name);
-
-        return tags.put(name,
-                Tag.Builder.create()
-                    .name(name)
-                    .title(results.get("title"))
-                    .creator(results.get("creator_name"))
-                    .build()
-        ) == null;
-    }
-
     public Tag get(String name) {
         return tags.get(name);
+    }
+
+    public Tag getFromTitle(String title) {
+        return tags.values().stream().filter(tag ->
+                    tag.hasTitle() &&
+                    ChatUtils.strip(tag.getTitle()).equalsIgnoreCase(ChatUtils.strip(title))
+                ).findFirst().orElse(null);
     }
 
     public void setTitle(Tag tag, String title) {
