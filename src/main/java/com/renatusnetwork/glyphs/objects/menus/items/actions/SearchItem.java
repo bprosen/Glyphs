@@ -1,4 +1,4 @@
-package com.renatusnetwork.glyphs.objects.menus.items.types;
+package com.renatusnetwork.glyphs.objects.menus.items.actions;
 
 import com.renatusnetwork.glyphs.Glyphs;
 import com.renatusnetwork.glyphs.managers.TagsManager;

@@ -1,4 +1,4 @@
-package com.renatusnetwork.glyphs.objects.menus.items.types;
+package com.renatusnetwork.glyphs.objects.menus.items.views;
 
 import com.renatusnetwork.glyphs.objects.menus.MenuPage;
 import com.renatusnetwork.glyphs.objects.menus.items.ViewItem;

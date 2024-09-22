@@ -1,4 +1,4 @@
-package com.renatusnetwork.glyphs.objects.menus;
+package com.renatusnetwork.glyphs.objects.menus.types;
 
 public enum ActionType {
     OPEN,
