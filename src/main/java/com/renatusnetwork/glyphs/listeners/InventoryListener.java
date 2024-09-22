@@ -2,6 +2,7 @@ package com.renatusnetwork.glyphs.listeners;
 
 import com.renatusnetwork.glyphs.managers.PlayerStatsManager;
 import com.renatusnetwork.glyphs.objects.menus.MenuHolder;
+import com.renatusnetwork.glyphs.objects.menus.items.ActionItem;
 import com.renatusnetwork.glyphs.objects.menus.items.MenuItem;
 import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import org.bukkit.entity.Player;
@@ -21,8 +22,8 @@ public class InventoryListener implements Listener {
             event.setCancelled(true);
             MenuItem menuItem = holder.getMenuPage().getItem(event.getSlot());
 
-            if (menuItem != null) {
-                menuItem.click(playerStats);
+            if (menuItem instanceof ActionItem) {
+                ((ActionItem) menuItem).click(playerStats);
             }
         }
     }

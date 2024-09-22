@@ -2,14 +2,16 @@ package com.renatusnetwork.glyphs.utils.config;
 
 import com.renatusnetwork.glyphs.Glyphs;
 import com.renatusnetwork.glyphs.managers.ConfigManager;
-import com.renatusnetwork.glyphs.managers.MenuManager;
-import com.renatusnetwork.glyphs.managers.PlayerStatsManager;
 import com.renatusnetwork.glyphs.managers.TagsManager;
+import com.renatusnetwork.glyphs.objects.menus.ActionType;
 import com.renatusnetwork.glyphs.objects.menus.Menu;
+import com.renatusnetwork.glyphs.objects.menus.items.ActionItem;
+import com.renatusnetwork.glyphs.objects.menus.items.types.GenericItem;
 import com.renatusnetwork.glyphs.objects.menus.items.MenuItem;
 import com.renatusnetwork.glyphs.objects.menus.MenuPage;
-import com.renatusnetwork.glyphs.objects.menus.items.OpenItem;
-import com.renatusnetwork.glyphs.objects.menus.items.TagItem;
+import com.renatusnetwork.glyphs.objects.menus.items.types.OpenItem;
+import com.renatusnetwork.glyphs.objects.menus.items.types.SearchItem;
+import com.renatusnetwork.glyphs.objects.menus.items.types.TagItem;
 import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import com.renatusnetwork.glyphs.objects.tags.Tag;
 import com.renatusnetwork.glyphs.utils.ChatUtils;
@@ -39,7 +41,6 @@ public class MenusUtils {
 
     public static Menu getMenu(String menuName) {
         FileConfiguration config = getMenusConfig();
-
         int pageCount = config.getInt(menuName + ".page_count", 1);
 
         return Menu.Builder.create().name(menuName).pageCount(pageCount).build();
@@ -86,40 +87,28 @@ public class MenusUtils {
         FileConfiguration config = getMenusConfig();
         String menuName = page.getMenu().getName();
         int pageNumber = page.getNumber();
+        String slotPath = buildSlotPath(menuName, pageNumber, slot);
 
-        if (config.isConfigurationSection(menuName + "." + pageNumber + "." + slot)) {
-            String materialString = config.getString(menuName + "." + pageNumber + "." + slot + ".material");
+        if (config.isConfigurationSection(slotPath)) {
+            String materialString = config.getString(slotPath + ".material");
 
             Material material = materialString != null ? Material.matchMaterial(materialString) : ConfigUtils.menu_default_material;
             ItemStack itemStack = new ItemStack(material);
             ItemMeta meta = itemStack.getItemMeta();
 
-            // Tag type
-            if (config.isSet(menuName + "." + pageNumber + "." + slot + ".tag")) {
-                return TagItem.Builder.create()
-                        .menuPage(page)
-                        .item(itemStack)
-                        .tag(TagsManager.getInstance().get(config.getString(menuName + "." + pageNumber + "." + slot + ".tag")))
-                        .build();
-            // Open type
-            } else if (config.isConfigurationSection(menuName + "." + pageNumber + "." + slot + ".open")) {
-                return OpenItem.Builder.create()
-                        .menuPage(page)
-                        .item(itemStack)
-                        .menu(config.getString(menuName + "." + pageNumber + "." + slot + ".open.menu"))
-                        .pageNumber(config.getInt(menuName + "." + pageNumber + "." + slot + ".open.page"))
-                        .build();
-            // Normal type
+            String title = config.getString(slotPath + ".title");
+            List<String> lore = config.getStringList(slotPath + ".lore");
+
+            meta.setDisplayName(ChatUtils.color(title));
+            meta.setLore(lore.stream().map(ChatUtils::color).collect(Collectors.toList()));
+
+            itemStack.setItemMeta(meta);
+
+            if (config.isConfigurationSection(slotPath + ".action")) {
+                return parseActionItem(page, slot, itemStack);
             } else {
-                String title = config.getString(menuName + "." + pageNumber + "." + slot + ".title");
-                List<String> lore = config.getStringList(menuName + "." + pageNumber + "." + slot + ".lore");
-
-                meta.setDisplayName(ChatUtils.color(title));
-                meta.setLore(lore.stream().map(ChatUtils::color).collect(Collectors.toList()));
-
-                itemStack.setItemMeta(meta);
-
-                return MenuItem.Builder.create().menuPage(page).item(itemStack).build();
+                // Normal type
+                return GenericItem.Builder.create().menuPage(page).item(itemStack).build();
             }
         }
         return null;
@@ -147,5 +136,44 @@ public class MenusUtils {
         item.setItemMeta(meta);
 
         return item;
+    }
+
+    private static ActionItem parseActionItem(MenuPage page, int slotNumber, ItemStack itemStack) {
+        FileConfiguration config = getMenusConfig();
+        String slotActionPath = buildSlotPath(page.getMenu().getName(), page.getNumber(), slotNumber) + ".action";
+        String type = config.getString(slotActionPath + ".type");
+
+        try {
+            ActionType actionType = ActionType.valueOf(type.toUpperCase());
+
+            switch (actionType) {
+                case OPEN:
+                    return OpenItem.Builder.create()
+                            .menuPage(page)
+                            .item(itemStack)
+                            .menu(config.getString(slotActionPath + ".open.menu"))
+                            .pageNumber(config.getInt(slotActionPath + ".open.page"))
+                            .build();
+                case SEARCH:
+                    return SearchItem.Builder.create()
+                            .menuPage(page)
+                            .item(itemStack)
+                            .build();
+                case TAG:
+                    return TagItem.Builder.create()
+                            .menuPage(page)
+                            .item(itemStack)
+                            .tag(TagsManager.getInstance().get(config.getString(slotActionPath + ".tag")))
+                            .build();
+            }
+
+        } catch (IllegalArgumentException exception) {
+            Glyphs.getLog().info("Could not parse action type: " + type);
+            exception.printStackTrace();
+        }
+    }
+
+    private static String buildSlotPath(String menuName, int pageNumber, int slot) {
+        return menuName + "." + pageNumber + "." + slot;
     }
 }

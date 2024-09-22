@@ -1,15 +1,16 @@
-package com.renatusnetwork.glyphs.objects.menus.items;
+package com.renatusnetwork.glyphs.objects.menus.items.types;
 
 import com.renatusnetwork.glyphs.managers.PlayerStatsManager;
-import com.renatusnetwork.glyphs.managers.TagsManager;
 import com.renatusnetwork.glyphs.objects.menus.MenuPage;
+import com.renatusnetwork.glyphs.objects.menus.items.ActionItem;
+import com.renatusnetwork.glyphs.objects.menus.items.MenuItem;
 import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import com.renatusnetwork.glyphs.utils.ChatUtils;
 import org.bukkit.inventory.ItemStack;
 import com.renatusnetwork.glyphs.objects.tags.Tag;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class TagItem extends MenuItem {
+public class TagItem extends ActionItem {
 
     private Tag tag;
 
@@ -68,7 +69,7 @@ public class TagItem extends MenuItem {
             return this;
         }
 
-        public TagItem build() {
+        public ActionItem build() {
             return new TagItem(menuPage, item, tag);
         }
     }

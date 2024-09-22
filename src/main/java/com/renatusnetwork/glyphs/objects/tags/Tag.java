@@ -1,15 +1,19 @@
 package com.renatusnetwork.glyphs.objects.tags;
 
+import org.bukkit.ChatColor;
+
 public class Tag {
 
     private String name;
     private String title;
+    private String strippedTitle;
     private String creator;
     private int creationDate;
 
     public Tag(String name, String title, String creator, int creationDate) {
         this.name = name;
         this.title = title;
+        this.strippedTitle = ChatColor.stripColor(title);
         this.creator = creator;
         this.creationDate = creationDate;
     }
@@ -24,10 +28,15 @@ public class Tag {
 
     public void setTitle(String title) {
         this.title = title;
+        this.strippedTitle = ChatColor.stripColor(title);
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public String getStrippedTitle() {
+        return strippedTitle;
     }
 
     public boolean hasTitle() { return title != null; }

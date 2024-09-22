@@ -1,14 +1,16 @@
-package com.renatusnetwork.glyphs.objects.menus.items;
+package com.renatusnetwork.glyphs.objects.menus.items.types;
 
 import com.renatusnetwork.glyphs.managers.MenuManager;
 import com.renatusnetwork.glyphs.objects.menus.Menu;
 import com.renatusnetwork.glyphs.objects.menus.MenuPage;
+import com.renatusnetwork.glyphs.objects.menus.items.ActionItem;
+import com.renatusnetwork.glyphs.objects.menus.items.MenuItem;
 import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import com.renatusnetwork.glyphs.utils.ChatUtils;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class OpenItem extends MenuItem {
+public class OpenItem extends ActionItem {
 
     private String menu;
     public int pageNumber;
@@ -80,7 +82,7 @@ public class OpenItem extends MenuItem {
             return this;
         }
 
-        public MenuItem build() {
+        public ActionItem build() {
             return new OpenItem(menuPage, item, menu, pageNumber);
         }
     }

@@ -3,8 +3,11 @@ package com.renatusnetwork.glyphs.managers;
 import com.renatusnetwork.glyphs.objects.tags.Tag;
 import com.renatusnetwork.glyphs.utils.ChatUtils;
 import com.renatusnetwork.glyphs.utils.database.tables.TagsUtils;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TagsManager {
 
@@ -65,5 +68,13 @@ public class TagsManager {
     public void setTitle(Tag tag, String title) {
         tag.setTitle(title);
         TagsUtils.setTitle(tag.getName(), title);
+    }
+
+    public List<Tag> search(String query) {
+        String queryLowerCase = query.toLowerCase();
+
+        return tags.values().stream().filter(
+                tag -> tag.hasTitle() && tag.getStrippedTitle().toLowerCase().contains(queryLowerCase)
+            ).collect(Collectors.toList());
     }
 }

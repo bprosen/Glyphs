@@ -1,11 +1,9 @@
 package com.renatusnetwork.glyphs.managers;
 
-import com.renatusnetwork.glyphs.Glyphs;
-import com.renatusnetwork.glyphs.listeners.InventoryListener;
 import com.renatusnetwork.glyphs.objects.menus.Menu;
 import com.renatusnetwork.glyphs.objects.menus.MenuHolder;
 import com.renatusnetwork.glyphs.objects.menus.MenuPage;
-import com.renatusnetwork.glyphs.objects.menus.items.TagItem;
+import com.renatusnetwork.glyphs.objects.menus.items.types.TagItem;
 import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import com.renatusnetwork.glyphs.utils.config.MenusUtils;
 import org.bukkit.Bukkit;
@@ -38,7 +36,7 @@ public class MenuManager {
         Inventory inventory = Bukkit.createInventory(new MenuHolder(menuPage), menuPage.getSize(), menuPage.getTitleColored());
 
         if (inventory != null) {
-            menuPage.getItems().forEach((key, value) ->  {
+            menuPage.getItems().forEach((key, value) -> {
                 ItemStack itemStack = value.getItem();
 
                 if (value instanceof TagItem) {
