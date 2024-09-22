@@ -40,6 +40,8 @@ public class PlayerStats {
         return currentTag;
     }
 
+    public boolean hasCurrentTag() { return currentTag != null; }
+
     public void openInventory(Inventory inventory) {
         player.openInventory(inventory);
     }

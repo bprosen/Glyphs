@@ -5,13 +5,12 @@ import com.renatusnetwork.glyphs.managers.ConfigManager;
 import com.renatusnetwork.glyphs.managers.TagsManager;
 import com.renatusnetwork.glyphs.objects.menus.ActionType;
 import com.renatusnetwork.glyphs.objects.menus.Menu;
+import com.renatusnetwork.glyphs.objects.menus.ViewType;
 import com.renatusnetwork.glyphs.objects.menus.items.ActionItem;
-import com.renatusnetwork.glyphs.objects.menus.items.types.GenericItem;
+import com.renatusnetwork.glyphs.objects.menus.items.ViewItem;
+import com.renatusnetwork.glyphs.objects.menus.items.types.*;
 import com.renatusnetwork.glyphs.objects.menus.items.MenuItem;
 import com.renatusnetwork.glyphs.objects.menus.MenuPage;
-import com.renatusnetwork.glyphs.objects.menus.items.types.OpenItem;
-import com.renatusnetwork.glyphs.objects.menus.items.types.SearchItem;
-import com.renatusnetwork.glyphs.objects.menus.items.types.TagItem;
 import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import com.renatusnetwork.glyphs.objects.tags.Tag;
 import com.renatusnetwork.glyphs.utils.ChatUtils;
@@ -125,7 +124,9 @@ public class MenusUtils {
 
             itemStack.setItemMeta(meta);
 
-            if (config.isConfigurationSection(slotPath + ".action")) {
+            if (config.isConfigurationSection(slotPath + ".view")) {
+                return parseViewItem(page, slot, itemStack);
+            } else if (config.isConfigurationSection(slotPath + ".action")) {
                 return parseActionItem(page, slot, itemStack);
             } else {
                 // Normal type
@@ -159,6 +160,17 @@ public class MenusUtils {
         return item;
     }
 
+    public static ItemStack parseCurrentTagItem(CurrentTagItem currentTagItem, PlayerStats playerStats) {
+        ItemStack item = currentTagItem.getItem().clone();
+        ItemMeta meta = item.getItemMeta();
+
+        meta.setDisplayName(playerStats.hasCurrentTag() ?
+                ChatUtils.color("Current tag: " + playerStats.getCurrentTag().getTitle()) : "&cNo current tag");
+        item.setItemMeta(meta);
+
+        return item;
+    }
+
     private static ActionItem parseActionItem(MenuPage page, int slotNumber, ItemStack itemStack) {
         FileConfiguration config = getMenusConfig();
         String slotActionPath = buildSlotPath(page.getMenu().getName(), page.getNumber(), slotNumber) + ".action";
@@ -185,6 +197,29 @@ public class MenusUtils {
                             .menuPage(page)
                             .item(itemStack)
                             .tag(TagsManager.getInstance().get(config.getString(slotActionPath + ".tag")))
+                            .build();
+            }
+
+        } catch (IllegalArgumentException exception) {
+            Glyphs.getLog().info("Could not parse action type: " + type);
+            exception.printStackTrace();
+        }
+        return null;
+    }
+
+    private static ViewItem parseViewItem(MenuPage page, int slotNumber, ItemStack itemStack) {
+        FileConfiguration config = getMenusConfig();
+        String slotViewPath = buildSlotPath(page.getMenu().getName(), page.getNumber(), slotNumber) + ".view";
+        String type = config.getString(slotViewPath + ".type");
+
+        try {
+            ViewType viewType = ViewType.valueOf(type.toUpperCase());
+
+            switch (viewType) {
+                case CURRENT_TAG:
+                    return CurrentTagItem.Builder.create()
+                            .menuPage(page)
+                            .item(itemStack)
                             .build();
             }
 

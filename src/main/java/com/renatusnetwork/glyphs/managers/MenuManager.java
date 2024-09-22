@@ -3,6 +3,7 @@ package com.renatusnetwork.glyphs.managers;
 import com.renatusnetwork.glyphs.objects.menus.Menu;
 import com.renatusnetwork.glyphs.objects.menus.MenuHolder;
 import com.renatusnetwork.glyphs.objects.menus.MenuPage;
+import com.renatusnetwork.glyphs.objects.menus.items.types.CurrentTagItem;
 import com.renatusnetwork.glyphs.objects.menus.items.types.TagItem;
 import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import com.renatusnetwork.glyphs.utils.config.MenusUtils;
@@ -42,6 +43,9 @@ public class MenuManager {
                 if (value instanceof TagItem) {
                     TagItem tagItem = (TagItem) value;
                     itemStack = MenusUtils.parseTagItem(tagItem, playerStats);
+                } else if (value instanceof CurrentTagItem) {
+                    CurrentTagItem currentTagItem = (CurrentTagItem) value;
+                    itemStack = MenusUtils.parseCurrentTagItem(currentTagItem, playerStats);
                 }
 
                 inventory.setItem(key, itemStack);
