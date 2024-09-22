@@ -22,6 +22,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -71,14 +72,34 @@ public class MenusUtils {
 
     public static HashMap<Integer, MenuItem> getItems(MenuPage page) {
         HashMap<Integer, MenuItem> items = new HashMap<>();
+        FileConfiguration config = getMenusConfig();
 
-        for (int i = 0; i < page.getSize(); i++) {
-            MenuItem menuItem = getMenuItem(page, i);
+        config.getKeys(false).forEach(key -> {
+            if (ParseUtils.isInteger(key)) {
+                int slot = Integer.parseInt(key);
+                items.put(slot, getMenuItem(page, slot));
+            } else {
+                // support for being able to mass set an item (ex: 0-15,24,19,4-2)
+                Arrays.asList(key.split(",")).forEach(commaSplit -> {
+                    if (commaSplit.contains("-")) {
+                        String[] subRange = commaSplit.split("-");
 
-            if (menuItem != null) {
-                items.put(i, menuItem);
+                        // make sure each side of the - is an int
+                        if (ParseUtils.isInteger(subRange[0]) && ParseUtils.isInteger(subRange[1])) {
+                            int from = Integer.parseInt(subRange[0]);
+                            int to = Integer.parseInt(subRange[1]);
+
+                            for (int i = from; i <= to; i++) {
+                                items.put(i, getMenuItem(page, i));
+                            }
+                        }
+                    } else if (ParseUtils.isInteger(commaSplit)) {
+                        int slot = Integer.parseInt(commaSplit);
+                        items.put(slot, getMenuItem(page, slot));
+                    }
+                });
             }
-        }
+        });
 
         return items;
     }
