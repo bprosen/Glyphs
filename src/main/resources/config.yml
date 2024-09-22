@@ -9,3 +9,4 @@ menu_default_material: BEDROCK
 menu_acquired_tag_material: NAME_TAG
 menu_missing_tag_material: BARRIER
 permission_node_prefix: "glyphs.tag."
+minimum_search_input: 3

@@ -7,6 +7,7 @@ import com.renatusnetwork.glyphs.objects.menus.items.ActionItem;
 import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import com.renatusnetwork.glyphs.objects.tags.Tag;
 import com.renatusnetwork.glyphs.utils.ChatUtils;
+import com.renatusnetwork.glyphs.utils.config.ConfigUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -45,7 +46,7 @@ public class SearchItem extends ActionItem {
                     String levelText = result.getText();
                     List<Tag> filteredItems = TagsManager.getInstance().search(levelText);
 
-                    if (slot != AnvilGUI.Slot.OUTPUT || levelText.length() < 3 ||
+                    if (slot != AnvilGUI.Slot.OUTPUT || levelText.length() < ConfigUtils.minimum_search_input ||
                         levelText.equalsIgnoreCase("Search tags") || filteredItems.isEmpty())
                         return Collections.emptyList();
                     return Arrays.asList(AnvilGUI.ResponseAction.close(), AnvilGUI.ResponseAction.run(() ->
