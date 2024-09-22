@@ -171,6 +171,7 @@ public class MenusUtils {
             Glyphs.getLog().info("Could not parse action type: " + type);
             exception.printStackTrace();
         }
+        return null;
     }
 
     private static String buildSlotPath(String menuName, int pageNumber, int slot) {
