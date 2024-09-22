@@ -19,8 +19,7 @@ public class MenuHolder implements InventoryHolder {
     }
 
     @Override
-    public Inventory getInventory()
-    {
+    public Inventory getInventory() {
         return null;
     }
 }

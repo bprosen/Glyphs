@@ -20,7 +20,6 @@ public class DatabaseManager {
 
     public static final String PLAYERS_TABLE = "players";
     public static final String TAGS_TABLE = "tags";
-    public static final String OWNED_TAGS_TABLE = "owned_tags";
 
     public DatabaseManager() {
         connection = new HikariConnection();
@@ -39,5 +38,9 @@ public class DatabaseManager {
             Tables.createKeys();
             Glyphs.getLog().info("Tables have successfully been created");
         }
+    }
+
+    public void close() {
+        connection.close();
     }
 }

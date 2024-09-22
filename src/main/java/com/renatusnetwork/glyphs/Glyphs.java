@@ -46,6 +46,7 @@ public class Glyphs extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        DatabaseManager.getInstance().close();
         log.info("Glyphs disabled");
     }
 
