@@ -45,6 +45,10 @@ public class Tag {
         return creationDate;
     }
 
+    public Tag clone() {
+        return new Tag(name, title, creator, creationDate);
+    }
+
     public static class Builder {
         private String name;
         private String title;
