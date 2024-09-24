@@ -1,5 +1,7 @@
 package com.renatusnetwork.glyphs.utils.config;
 
+import com.renatusnetwork.glyphs.Glyphs;
+import com.renatusnetwork.glyphs.listeners.LuckPermsMutateEvent;
 import com.renatusnetwork.glyphs.managers.ConfigManager;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -12,6 +14,7 @@ public class ConfigUtils {
     public static Material menu_missing_tag_material;
     public static String permission_node_prefix;
     public static String admin_node_permission;
+    public static boolean luckperms_enabled;
     public static int minimum_search_input;
 
     public static void load() {
@@ -24,6 +27,7 @@ public class ConfigUtils {
         permission_node_prefix = config.getString("permission_node_prefix");
         minimum_search_input = config.getInt("minimum_search_input");
         admin_node_permission = config.getString("admin_node_permission");
+        luckperms_enabled = config.getBoolean("luckperms_enabled");
     }
 
     public static FileConfiguration getConfig() {

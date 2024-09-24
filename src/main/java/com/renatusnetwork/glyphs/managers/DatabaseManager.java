@@ -16,7 +16,7 @@ public class DatabaseManager {
         return instance == null ? instance = new DatabaseManager() : instance;
     }
 
-    private HikariConnection connection;
+    private final HikariConnection connection;
 
     public static final String PLAYERS_TABLE = "players";
     public static final String TAGS_TABLE = "tags";

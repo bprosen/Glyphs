@@ -2,9 +2,11 @@ package com.renatusnetwork.glyphs;
 
 import com.renatusnetwork.glyphs.commands.glyphs.GlyphsCommand;
 import com.renatusnetwork.glyphs.commands.tags.TagsCommand;
+import com.renatusnetwork.glyphs.dependencies.LuckPermsAdapter;
 import com.renatusnetwork.glyphs.listeners.ChatListener;
 import com.renatusnetwork.glyphs.listeners.InventoryListener;
 import com.renatusnetwork.glyphs.listeners.JoinQuitListener;
+import com.renatusnetwork.glyphs.listeners.LuckPermsMutateEvent;
 import com.renatusnetwork.glyphs.managers.*;
 import com.renatusnetwork.glyphs.utils.config.ConfigUtils;
 import com.renatusnetwork.glyphs.utils.config.LangUtils;
@@ -33,6 +35,7 @@ public class Glyphs extends JavaPlugin {
         LangUtils.load();
         ConfigUtils.load();
         DatabaseManager.getInstance().initTables();
+        LuckPermsAdapter.init();
 
         registerManagers();
         registerListeners();

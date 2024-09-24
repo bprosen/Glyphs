@@ -17,7 +17,7 @@ public class TagsManager {
         return instance == null ? instance = new TagsManager() : instance;
     }
 
-    private HashMap<String, Tag> tags;
+    private final HashMap<String, Tag> tags;
 
     public TagsManager() {
         this.tags = new HashMap<>();

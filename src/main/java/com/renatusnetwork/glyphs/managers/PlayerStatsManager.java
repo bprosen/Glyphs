@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.UUID;
 
 public class PlayerStatsManager {
 
@@ -16,30 +17,42 @@ public class PlayerStatsManager {
         return instance == null ? instance = new PlayerStatsManager() : instance;
     }
 
-    private HashMap<Player, PlayerStats> playerStatsMap;
+    private final HashMap<UUID, PlayerStats> playerStatsMap;
 
     public PlayerStatsManager() {
         this.playerStatsMap = new HashMap<>();
     }
 
     public PlayerStats get(Player player) {
-        return playerStatsMap.get(player);
+        synchronized (playerStatsMap) {
+            return playerStatsMap.get(player.getUniqueId());
+        }
+    }
+
+    public PlayerStats get(UUID uuid) {
+        synchronized (playerStatsMap) {
+            return playerStatsMap.get(uuid);
+        }
     }
 
     public boolean add(Player player) {
         PlayerStatsUtils.insert(player.getUniqueId(), player.getName());
         Tag currentTag = PlayerStatsUtils.getCurrentTag(player.getUniqueId());
 
-        return playerStatsMap.put(player,
-                PlayerStats.Builder.create()
-                    .player(player)
-                    .currentTag(currentTag)
-                    .build()
-                ) == null;
+        synchronized (playerStatsMap) {
+            return playerStatsMap.put(player.getUniqueId(),
+                    PlayerStats.Builder.create()
+                            .player(player)
+                            .currentTag(currentTag)
+                            .build()
+            ) == null;
+        }
     }
 
     public boolean remove(Player player) {
-        return playerStatsMap.remove(player) != null;
+        synchronized (playerStatsMap) {
+            return playerStatsMap.remove(player.getUniqueId()) != null;
+        }
     }
 
     public void setTag(PlayerStats playerStats, Tag tag) {

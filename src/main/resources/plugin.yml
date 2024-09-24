@@ -3,7 +3,8 @@ description: "${project.description}"
 main: com.renatusnetwork.glyphs.Glyphs
 version: ${project.version}
 author: [xxBen]
-
+softdepend:
+  - LuckPerms
 commands:
   tags:
     aliases: [glyphs]

@@ -16,8 +16,8 @@ public class ResetItem extends ActionItem {
 
     @Override
     public void click(PlayerStats playerStats) {
-        playerStats.getPlayer().closeInventory();
-        playerStats.getPlayer().sendMessage(
+        playerStats.closeInventory();
+        playerStats.sendMessage(
                 playerStats.hasCurrentTag() ?
                 ChatUtils.color(LangUtils.tag_reset_self_succeed) : ChatUtils.color(LangUtils.tag_reset_self_no_tag)
         );

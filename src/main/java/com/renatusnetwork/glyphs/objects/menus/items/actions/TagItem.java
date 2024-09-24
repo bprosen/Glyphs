@@ -27,9 +27,9 @@ public class TagItem extends ActionItem {
     @Override
     public void click(PlayerStats playerStats) {
         if (playerStats.hasTag(tag)) {
-            playerStats.getPlayer().closeInventory();
+            playerStats.closeInventory();
             PlayerStatsManager.getInstance().setTag(playerStats, tag);
-            playerStats.getPlayer().sendMessage(LangUtils.parse(LangUtils.tag_set_self, tag.getTitle()));
+            playerStats.sendMessage(LangUtils.parse(LangUtils.tag_set_self, tag.getTitle()));
         }
     }
 

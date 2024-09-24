@@ -50,6 +50,14 @@ public class PlayerStats {
         return player.hasPermission(ConfigUtils.permission_node_prefix + tag.getName());
     }
 
+    public void sendMessage(String message) {
+        player.sendMessage(message);
+    }
+
+    public void closeInventory() {
+        player.closeInventory();
+    }
+
     public static class Builder {
         private Player player;
         private Tag currentTag;
