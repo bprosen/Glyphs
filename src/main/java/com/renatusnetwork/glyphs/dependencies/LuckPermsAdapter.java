@@ -2,6 +2,7 @@ package com.renatusnetwork.glyphs.dependencies;
 
 import com.renatusnetwork.glyphs.Glyphs;
 import com.renatusnetwork.glyphs.listeners.LuckPermsMutateEvent;
+import com.renatusnetwork.glyphs.utils.config.ConfigUtils;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.event.node.NodeAddEvent;
 import org.bukkit.Bukkit;
@@ -16,7 +17,9 @@ public class LuckPermsAdapter {
     }
 
     public static void init() {
-        instance = new LuckPermsAdapter();
+        if (ConfigUtils.luckperms_enabled) {
+            instance = new LuckPermsAdapter();
+        }
     }
 
     private LuckPerms api;
