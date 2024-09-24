@@ -8,6 +8,10 @@ tag_set: "&a$1&7's tag is now set to &a$2"
 tag_set_title: "&a$1&7's title is now set to &a$2"
 tag_reset: "&a$1&7's tag has been reset"
 tag_reveal_title: "&7The tag from title &a$1&7 is &a$2"
+tag_reset_self_succeed: "&aYou have reset your tag"
+tag_reset_self_no_tag: "&cYou do not have a tag to reset"
+tag_set_self: "&7You have set your tag to &a$1"
+successful_reload: "&cYou have successfully reloaded config.yml, menus.yml and lang.yml"
 tag_info:
   - "&a$1&7 Info"
   - "  &7Name: &a$2"
@@ -24,3 +28,7 @@ tags_command_help:
   - " &8→ &a/tags reveal (title)  &7Title can have spaces"
   - " &8→ &a/tags info (tagName)"
   - " &8→ &a/tags help"
+glyphs_command_help:
+  - "&a&lGlyphs Help"
+  - " &8→ &2/glyphs reload"
+  - " &8→ &2/glyphs help"

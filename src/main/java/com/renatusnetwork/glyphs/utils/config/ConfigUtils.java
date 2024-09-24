@@ -11,6 +11,7 @@ public class ConfigUtils {
     public static Material menu_acquired_tag_material;
     public static Material menu_missing_tag_material;
     public static String permission_node_prefix;
+    public static String admin_node_permission;
     public static int minimum_search_input;
 
     public static void load() {
@@ -22,6 +23,7 @@ public class ConfigUtils {
         menu_missing_tag_material = Material.matchMaterial(config.getString("menu_missing_tag_material"));
         permission_node_prefix = config.getString("permission_node_prefix");
         minimum_search_input = config.getInt("minimum_search_input");
+        admin_node_permission = config.getString("admin_node_permission");
     }
 
     public static FileConfiguration getConfig() {

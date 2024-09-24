@@ -24,7 +24,11 @@ public class MenuManager {
     private HashMap<String, Menu> menus;
 
     private MenuManager() {
-        menus = MenusUtils.getMenus();
+        load();
+    }
+
+    public void load() {
+        this.menus = MenusUtils.getMenus();
     }
 
     public Menu get(String menuName) {

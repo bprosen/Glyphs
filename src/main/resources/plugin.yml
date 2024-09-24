@@ -8,3 +8,5 @@ commands:
   tags:
     aliases: [glyphs]
     description: Glyphs Tags Command
+  glyphs:
+    description: Glyphs Main Command

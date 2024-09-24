@@ -6,15 +6,31 @@ tags:
     '0':
       material: TORCH
       title: "&ctorch"
-      lore:
-        - "The torch"
+      view:
+        type: CURRENT_TAG
     '1':
-      tag: test
+      material: NAME_TAG
+      action:
+        type: TAG
+        tag: test
     '2':
       material: PAPER
-      open:
+      action:
+        type: open
         menu: tags
-        page: 2
+        page: 1
+    '3':
+      material: NAME_TAG
+      title: "&5Search Tags"
+      action:
+        type: SEARCH
+    '4':
+      material: BARRIER
+      title: "&cReset"
+      lore:
+        - "&7&oClick me to reset your tag"
+      action:
+        type: RESET
   '1':
     title: "Test 2"
     size: 54

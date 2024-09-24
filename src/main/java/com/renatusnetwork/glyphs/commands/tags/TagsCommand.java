@@ -5,6 +5,7 @@ import com.renatusnetwork.glyphs.commands.tags.subcommands.*;
 import com.renatusnetwork.glyphs.managers.MenuManager;
 import com.renatusnetwork.glyphs.managers.PlayerStatsManager;
 import com.renatusnetwork.glyphs.objects.players.PlayerStats;
+import com.renatusnetwork.glyphs.utils.ChatUtils;
 import com.renatusnetwork.glyphs.utils.config.ConfigUtils;
 import com.renatusnetwork.glyphs.utils.config.LangUtils;
 import org.bukkit.command.Command;
@@ -14,7 +15,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
-public class Tags implements CommandExecutor {
+public class TagsCommand implements CommandExecutor {
 
     public static final String CREATE_COMMAND_TEXT = "create";
     public static final String DELETE_COMMAND_TEXT = "delete";
@@ -26,7 +27,7 @@ public class Tags implements CommandExecutor {
 
     private HashMap<String, CommandHandler> subCommands;
 
-    public Tags() {
+    public TagsCommand() {
         subCommands = new HashMap<String, CommandHandler>() {{
             put(CREATE_COMMAND_TEXT, new TagsCreate());
             put(DELETE_COMMAND_TEXT, new TagsDelete());
@@ -40,7 +41,8 @@ public class Tags implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] a) {
-        if (sender.isOp() && a.length > 0 && !(subCommands.containsKey(a[0]) && subCommands.get(a[0]).handle(sender, a))) {
+        if (sender.hasPermission(ConfigUtils.admin_node_permission) && a.length > 0 &&
+            !(subCommands.containsKey(a[0]) && subCommands.get(a[0]).handle(sender, a))) {
             sendHelp(sender);
         } else if (sender instanceof Player && a.length == 0) {
             // Run main command
@@ -56,6 +58,6 @@ public class Tags implements CommandExecutor {
     }
 
     private void sendHelp(CommandSender sender) {
-        sender.sendMessage(LangUtils.tags_command_help);
+        sender.sendMessage(ChatUtils.color(LangUtils.tags_command_help));
     }
 }

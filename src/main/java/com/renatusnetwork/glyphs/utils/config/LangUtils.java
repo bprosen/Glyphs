@@ -22,6 +22,11 @@ public class LangUtils {
     public static String tag_reveal_title;
     public static String tag_info;
     public static String tags_command_help;
+    public static String tag_reset_self_succeed;
+    public static String tag_reset_self_no_tag;
+    public static String successful_reload;
+    public static String glyphs_command_help;
+    public static String tag_set_self;
 
     public static void load() {
         FileConfiguration langConfig = ConfigManager.getInstance().get("lang");
@@ -37,6 +42,11 @@ public class LangUtils {
         tag_reset = langConfig.getString("tag_reset");
         tag_info = flattenStringList(langConfig.getStringList("tag_info"));
         tags_command_help = flattenStringList(langConfig.getStringList("tags_command_help"));
+        tag_reset_self_succeed = langConfig.getString("tag_reset_self_succeed");
+        tag_reset_self_no_tag = langConfig.getString("tag_reset_self_no_tag");
+        successful_reload = langConfig.getString("successful_reload");
+        glyphs_command_help = flattenStringList(langConfig.getStringList("glyphs_command_help"));
+        tag_set_self = langConfig.getString("tag_set_self");
     }
 
     public static String parse(String input, String... replacements) {

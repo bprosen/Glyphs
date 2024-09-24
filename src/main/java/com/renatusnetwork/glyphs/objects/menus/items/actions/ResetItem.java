@@ -7,36 +7,26 @@ import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import com.renatusnetwork.glyphs.utils.ChatUtils;
 import com.renatusnetwork.glyphs.utils.config.LangUtils;
 import org.bukkit.inventory.ItemStack;
-import com.renatusnetwork.glyphs.objects.tags.Tag;
-import org.bukkit.inventory.meta.ItemMeta;
 
-public class TagItem extends ActionItem {
+public class ResetItem extends ActionItem {
 
-    private Tag tag;
-
-    public TagItem(MenuPage menuPage, ItemStack item, Tag tag) {
+    public ResetItem(MenuPage menuPage, ItemStack item) {
         super(menuPage, item);
-
-        this.tag = tag;
-    }
-
-    public Tag getTag() {
-        return tag;
     }
 
     @Override
     public void click(PlayerStats playerStats) {
-        if (playerStats.hasTag(tag)) {
-            playerStats.getPlayer().closeInventory();
-            PlayerStatsManager.getInstance().setTag(playerStats, tag);
-            playerStats.getPlayer().sendMessage(LangUtils.parse(LangUtils.tag_set_self, tag.getTitle()));
-        }
+        playerStats.getPlayer().closeInventory();
+        playerStats.getPlayer().sendMessage(
+                playerStats.hasCurrentTag() ?
+                ChatUtils.color(LangUtils.tag_reset_self_succeed) : ChatUtils.color(LangUtils.tag_reset_self_no_tag)
+        );
+        PlayerStatsManager.getInstance().resetTag(playerStats);
     }
 
     public static class Builder {
         private MenuPage menuPage;
         private ItemStack item;
-        private Tag tag;
 
         public static Builder create() {
             return new Builder();
@@ -52,13 +42,8 @@ public class TagItem extends ActionItem {
             return this;
         }
 
-        public Builder tag(Tag tag) {
-            this.tag = tag;
-            return this;
-        }
-
         public ActionItem build() {
-            return new TagItem(menuPage, item, tag);
+            return new ResetItem(menuPage, item);
         }
     }
 }

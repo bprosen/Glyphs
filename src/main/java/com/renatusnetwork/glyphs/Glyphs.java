@@ -1,13 +1,11 @@
 package com.renatusnetwork.glyphs;
 
-import com.renatusnetwork.glyphs.commands.tags.Tags;
+import com.renatusnetwork.glyphs.commands.glyphs.GlyphsCommand;
+import com.renatusnetwork.glyphs.commands.tags.TagsCommand;
 import com.renatusnetwork.glyphs.listeners.ChatListener;
 import com.renatusnetwork.glyphs.listeners.InventoryListener;
 import com.renatusnetwork.glyphs.listeners.JoinQuitListener;
-import com.renatusnetwork.glyphs.managers.DatabaseManager;
-import com.renatusnetwork.glyphs.managers.MenuManager;
-import com.renatusnetwork.glyphs.managers.PlayerStatsManager;
-import com.renatusnetwork.glyphs.managers.TagsManager;
+import com.renatusnetwork.glyphs.managers.*;
 import com.renatusnetwork.glyphs.utils.config.ConfigUtils;
 import com.renatusnetwork.glyphs.utils.config.LangUtils;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -34,12 +32,11 @@ public class Glyphs extends JavaPlugin {
 
         LangUtils.load();
         ConfigUtils.load();
+        DatabaseManager.getInstance().initTables();
 
         registerManagers();
         registerListeners();
         registerCommands();
-
-        DatabaseManager.getInstance().initTables();
 
         log.info("Glyphs enabled");
     }
@@ -48,6 +45,13 @@ public class Glyphs extends JavaPlugin {
     public void onDisable() {
         DatabaseManager.getInstance().close();
         log.info("Glyphs disabled");
+    }
+
+    public void loadAllData() {
+        ConfigManager.getInstance().load();
+        ConfigUtils.load();
+        LangUtils.load();
+        MenuManager.getInstance().load();
     }
 
     private void registerManagers() {
@@ -64,6 +68,7 @@ public class Glyphs extends JavaPlugin {
     }
 
     private void registerCommands() {
-        getCommand("tags").setExecutor(new Tags());
+        getCommand("tags").setExecutor(new TagsCommand());
+        getCommand("glyphs").setExecutor(new GlyphsCommand());
     }
 }

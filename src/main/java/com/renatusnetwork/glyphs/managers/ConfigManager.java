@@ -19,8 +19,15 @@ public class ConfigManager {
 
     private Map<String, File> files;
     private Map<String, FileConfiguration> configs;
+    private Plugin plugin;
 
     public ConfigManager(Plugin plugin) {
+        this.plugin = plugin;
+
+        load();
+    }
+
+    public void load() {
         this.files = new HashMap<>();
         this.configs = new HashMap<>();
 
@@ -75,15 +82,6 @@ public class ConfigManager {
             configs.get(fileName).load(files.get(fileName));
         }
         catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void save(String fileName) {
-        try {
-            configs.get(fileName).save(files.get(fileName));
-        }
-        catch (IOException e) {
             e.printStackTrace();
         }
     }

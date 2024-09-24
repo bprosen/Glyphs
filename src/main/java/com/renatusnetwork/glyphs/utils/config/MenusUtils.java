@@ -17,6 +17,7 @@ import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import com.renatusnetwork.glyphs.objects.tags.Tag;
 import com.renatusnetwork.glyphs.utils.ChatUtils;
 import com.renatusnetwork.glyphs.utils.TimeUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
@@ -75,7 +76,7 @@ public class MenusUtils {
         HashMap<Integer, MenuItem> items = new HashMap<>();
         FileConfiguration config = getMenusConfig();
 
-        config.getKeys(false).forEach(key -> {
+        config.getConfigurationSection(page.getMenu().getName() + "." + page.getNumber()).getKeys(false).forEach(key -> {
             if (ParseUtils.isInteger(key)) {
                 int slot = Integer.parseInt(key);
                 items.put(slot, getMenuItem(page, slot));
@@ -121,7 +122,7 @@ public class MenusUtils {
             String title = config.getString(slotPath + ".title");
             List<String> lore = config.getStringList(slotPath + ".lore");
 
-            meta.setDisplayName(ChatUtils.color(title));
+            meta.setDisplayName(title != null ? ChatUtils.color(title) : "");
             meta.setLore(lore.stream().map(ChatUtils::color).collect(Collectors.toList()));
 
             itemStack.setItemMeta(meta);
@@ -167,7 +168,8 @@ public class MenusUtils {
         ItemMeta meta = item.getItemMeta();
 
         meta.setDisplayName(playerStats.hasCurrentTag() ?
-                ChatUtils.color("Current tag: " + playerStats.getCurrentTag().getTitle()) : "&cNo current tag");
+                ChatUtils.color("&7Current tag: " + playerStats.getCurrentTag().getTitle()) :
+                ChatUtils.color("&cNo current tag"));
         item.setItemMeta(meta);
 
         return item;
@@ -186,8 +188,8 @@ public class MenusUtils {
                     return OpenItem.Builder.create()
                             .menuPage(page)
                             .item(itemStack)
-                            .menu(config.getString(slotActionPath + ".open.menu"))
-                            .pageNumber(config.getInt(slotActionPath + ".open.page"))
+                            .menu(config.getString(slotActionPath + ".menu"))
+                            .pageNumber(config.getInt(slotActionPath + ".page"))
                             .build();
                 case SEARCH:
                     return SearchItem.Builder.create()
@@ -199,6 +201,11 @@ public class MenusUtils {
                             .menuPage(page)
                             .item(itemStack)
                             .tag(TagsManager.getInstance().get(config.getString(slotActionPath + ".tag")))
+                            .build();
+                case RESET:
+                    return ResetItem.Builder.create()
+                            .menuPage(page)
+                            .item(itemStack)
                             .build();
             }
 
@@ -220,7 +227,6 @@ public class MenusUtils {
             switch (viewType) {
                 case CURRENT_TAG:
                     return CurrentTagItem.Builder.create()
-                            .menuPage(page)
                             .item(itemStack)
                             .build();
             }

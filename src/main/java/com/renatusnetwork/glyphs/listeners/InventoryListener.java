@@ -10,20 +10,25 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.Inventory;
 
 public class InventoryListener implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getWhoClicked() instanceof Player && event.getInventory().getHolder() instanceof MenuHolder) {
-            MenuHolder holder = (MenuHolder) event.getInventory().getHolder();
-            PlayerStats playerStats = PlayerStatsManager.getInstance().get((Player) event.getWhoClicked());
-
             event.setCancelled(true);
-            MenuItem menuItem = holder.getMenuPage().getItem(event.getSlot());
 
-            if (menuItem instanceof ActionItem) {
-                ((ActionItem) menuItem).click(playerStats);
+            Inventory clickedInventory = event.getClickedInventory();
+            if (clickedInventory != null && clickedInventory.getHolder() instanceof MenuHolder) {
+                MenuHolder holder = (MenuHolder) clickedInventory.getHolder();
+                PlayerStats playerStats = PlayerStatsManager.getInstance().get((Player) event.getWhoClicked());
+
+                MenuItem menuItem = holder.getMenuPage().getItem(event.getSlot());
+
+                if (menuItem instanceof ActionItem) {
+                    ((ActionItem) menuItem).click(playerStats);
+                }
             }
         }
     }
