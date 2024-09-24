@@ -2,6 +2,7 @@ package com.renatusnetwork.glyphs.managers;
 
 import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import com.renatusnetwork.glyphs.objects.tags.Tag;
+import com.renatusnetwork.glyphs.utils.database.tables.FavoriteTagsUtils;
 import com.renatusnetwork.glyphs.utils.database.tables.PlayerStatsUtils;
 import org.bukkit.entity.Player;
 
@@ -38,12 +39,14 @@ public class PlayerStatsManager {
     public boolean add(Player player) {
         PlayerStatsUtils.insert(player.getUniqueId(), player.getName());
         Tag currentTag = PlayerStatsUtils.getCurrentTag(player.getUniqueId());
+        HashSet<Tag> favorites = FavoriteTagsUtils.getFavoriteTags(player.getUniqueId());
 
         synchronized (playerStatsMap) {
             return playerStatsMap.put(player.getUniqueId(),
                     PlayerStats.Builder.create()
                             .player(player)
                             .currentTag(currentTag)
+                            .favorites(favorites)
                             .build()
             ) == null;
         }
@@ -63,5 +66,15 @@ public class PlayerStatsManager {
     public void resetTag(PlayerStats playerStats) {
         playerStats.resetCurrentTag();
         PlayerStatsUtils.resetCurrentTag(playerStats.getUUID());
+    }
+
+    public void addFavorite(PlayerStats playerStats, Tag tag) {
+        playerStats.addFavorite(tag);
+        FavoriteTagsUtils.addFavoriteTag(playerStats.getUUID(), tag.getName());
+    }
+
+    public void removeFavorite(PlayerStats playerStats, Tag tag) {
+        playerStats.removeFavorite(tag);
+        FavoriteTagsUtils.removeFavoriteTag(playerStats.getUUID(), tag.getName());
     }
 }

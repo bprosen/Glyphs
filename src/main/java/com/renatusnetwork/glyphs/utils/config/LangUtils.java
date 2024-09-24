@@ -47,6 +47,7 @@ public class LangUtils {
         successful_reload = langConfig.getString("successful_reload");
         glyphs_command_help = flattenStringList(langConfig.getStringList("glyphs_command_help"));
         tag_set_self = langConfig.getString("tag_set_self");
+        tag_reveal_title = langConfig.getString("tag_reveal_title");
     }
 
     public static String parse(String input, String... replacements) {

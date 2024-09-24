@@ -28,7 +28,7 @@ public class TagsInfo implements CommandHandler {
                             tagName,
                             tag.getTitle(),
                             tag.getCreator(),
-                            TimeUtils.parseTime(tag.getCreationDate())
+                            TimeUtils.parseTimeToCreatedAt(tag.getCreationDate())
                     ));
             return true;
         }

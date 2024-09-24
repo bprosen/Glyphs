@@ -1,5 +1,6 @@
 package com.renatusnetwork.glyphs.objects.tags;
 
+import com.renatusnetwork.glyphs.utils.ChatUtils;
 import org.bukkit.ChatColor;
 
 public class Tag {
@@ -12,8 +13,7 @@ public class Tag {
 
     public Tag(String name, String title, String creator, int creationDate) {
         this.name = name;
-        this.title = title;
-        this.strippedTitle = ChatColor.stripColor(title);
+        setTitle(title);
         this.creator = creator;
         this.creationDate = creationDate;
     }
@@ -28,7 +28,7 @@ public class Tag {
 
     public void setTitle(String title) {
         this.title = title;
-        this.strippedTitle = ChatColor.stripColor(title);
+        this.strippedTitle = ChatUtils.removeColorCodes(title);
     }
 
     public String getTitle() {

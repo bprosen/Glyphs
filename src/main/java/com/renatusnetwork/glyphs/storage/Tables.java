@@ -30,10 +30,12 @@ public class Tables {
     public static void createTables() {
         createPlayers();
         createTags();
+        createFavoriteTags();
     }
 
     public static void createKeys() {
         createPlayersKeys();
+        createFavoriteTagsKeys();
     }
 
     public static void createPlayers() {
@@ -60,6 +62,26 @@ public class Tables {
                 "creator_name VARCHAR(16) NOT NULL, " +
                 "creation_date INT NOT NULL, " +
                 "PRIMARY KEY(name))"
+        );
+    }
+
+    public static void createFavoriteTags() {
+        DatabaseUtils.run("CREATE TABLE " + DatabaseManager.FAVORITE_TAGS_TABLE + " (" +
+                "player_uuid CHAR(36) NOT NULL, " +
+                "tag_name VARCHAR(20) NOT NULL, " +
+                "PRIMARY KEY (player_uuid))"
+        );
+    }
+
+    public static void createFavoriteTagsKeys() {
+        DatabaseUtils.run("ALTER TABLE " + DatabaseManager.FAVORITE_TAGS_TABLE + " ADD CONSTRAINT " + DatabaseManager.FAVORITE_TAGS_TABLE + "_player_uuid_fk " +
+                "FOREIGN KEY(player_uuid) REFERENCES " + DatabaseManager.PLAYERS_TABLE + "(uuid) " +
+                "ON UPDATE CASCADE " +
+                "ON DELETE CASCADE, " +
+                "ADD CONSTRAINT " + DatabaseManager.FAVORITE_TAGS_TABLE + "_tag_name_fk " +
+                "FOREIGN KEY(tag_name) REFERENCES " + DatabaseManager.TAGS_TABLE + "(name) " +
+                "ON UPDATE CASCADE " +
+                "ON DELETE CASCADE"
         );
     }
 }

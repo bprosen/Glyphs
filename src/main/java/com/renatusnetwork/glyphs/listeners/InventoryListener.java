@@ -4,7 +4,9 @@ import com.renatusnetwork.glyphs.managers.PlayerStatsManager;
 import com.renatusnetwork.glyphs.objects.menus.MenuHolder;
 import com.renatusnetwork.glyphs.objects.menus.items.ActionItem;
 import com.renatusnetwork.glyphs.objects.menus.items.MenuItem;
+import com.renatusnetwork.glyphs.objects.menus.items.actions.TagItem;
 import com.renatusnetwork.glyphs.objects.players.PlayerStats;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,10 +25,13 @@ public class InventoryListener implements Listener {
             if (clickedInventory != null && clickedInventory.getHolder() instanceof MenuHolder) {
                 MenuHolder holder = (MenuHolder) clickedInventory.getHolder();
                 PlayerStats playerStats = PlayerStatsManager.getInstance().get((Player) event.getWhoClicked());
+                int slot = event.getSlot();
 
-                MenuItem menuItem = holder.getMenuPage().getItem(event.getSlot());
+                MenuItem menuItem = holder.getMenuPage().getItem(slot);
 
-                if (menuItem instanceof ActionItem) {
+                if (menuItem instanceof TagItem && event.isShiftClick()) {
+                    ((TagItem) menuItem).favorite(playerStats, slot);
+                } else if (menuItem instanceof ActionItem) {
                     ((ActionItem) menuItem).click(playerStats);
                 }
             }

@@ -23,7 +23,7 @@ public class TagsReveal implements CommandHandler {
                 return true;
             }
 
-            sender.sendMessage(LangUtils.parse(LangUtils.tag_reveal_title, title, tag.getName()));
+            sender.sendMessage(LangUtils.parse(LangUtils.tag_reveal_title, tag.getTitle(), tag.getName()));
             return true;
         }
         return false;

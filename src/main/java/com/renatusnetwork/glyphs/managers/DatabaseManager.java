@@ -20,6 +20,7 @@ public class DatabaseManager {
 
     public static final String PLAYERS_TABLE = "players";
     public static final String TAGS_TABLE = "tags";
+    public static final String FAVORITE_TAGS_TABLE = "favorite_tags";
 
     public DatabaseManager() {
         connection = new HikariConnection();

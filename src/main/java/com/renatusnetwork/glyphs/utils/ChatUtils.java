@@ -11,4 +11,8 @@ public class ChatUtils {
     public static String strip(String input) {
         return ChatColor.stripColor(input);
     }
+
+    public static String removeColorCodes(String input) {
+        return strip(color(input));
+    }
 }

@@ -59,9 +59,11 @@ public class TagsManager {
     }
 
     public Tag getFromTitle(String title) {
+        String strippedTitle = ChatUtils.removeColorCodes(title);
+
         return tags.values().stream().filter(tag ->
                     tag.hasTitle() &&
-                    ChatUtils.strip(tag.getTitle()).equalsIgnoreCase(ChatUtils.strip(title))
+                    tag.getStrippedTitle().equalsIgnoreCase(strippedTitle)
                 ).findFirst().orElse(null);
     }
 

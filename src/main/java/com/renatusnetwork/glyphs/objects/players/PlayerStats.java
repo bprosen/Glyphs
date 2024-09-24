@@ -1,12 +1,8 @@
 package com.renatusnetwork.glyphs.objects.players;
-
-import com.renatusnetwork.glyphs.objects.menus.Menu;
-import com.renatusnetwork.glyphs.objects.menus.MenuPage;
 import com.renatusnetwork.glyphs.objects.tags.Tag;
 import com.renatusnetwork.glyphs.utils.config.ConfigUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-
 import java.util.HashSet;
 import java.util.UUID;
 
@@ -14,10 +10,12 @@ public class PlayerStats {
 
     private Player player;
     private Tag currentTag;
+    private HashSet<Tag> favorites;
 
-    public PlayerStats(Player player, Tag currentTag) {
+    public PlayerStats(Player player, Tag currentTag, HashSet<Tag> favorites) {
         this.player = player;
         this.currentTag = currentTag;
+        this.favorites = favorites;
     }
 
     public Player getPlayer() {
@@ -50,6 +48,18 @@ public class PlayerStats {
         return player.hasPermission(ConfigUtils.permission_node_prefix + tag.getName());
     }
 
+    public boolean isFavorite(Tag tag) {
+        return favorites.contains(tag);
+    }
+
+    public void addFavorite(Tag tag) {
+        favorites.add(tag);
+    }
+
+    public void removeFavorite(Tag tag) {
+        favorites.remove(tag);
+    }
+
     public void sendMessage(String message) {
         player.sendMessage(message);
     }
@@ -61,6 +71,7 @@ public class PlayerStats {
     public static class Builder {
         private Player player;
         private Tag currentTag;
+        private HashSet<Tag> favorites;
 
         public static Builder create() {
             return new Builder();
@@ -76,8 +87,13 @@ public class PlayerStats {
             return this;
         }
 
+        public Builder favorites(HashSet<Tag> favorites) {
+            this.favorites = favorites;
+            return this;
+        }
+
         public PlayerStats build() {
-            return new PlayerStats(player, currentTag);
+            return new PlayerStats(player, currentTag, favorites);
         }
     }
 }

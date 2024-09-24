@@ -145,16 +145,21 @@ public class MenusUtils {
 
         ItemStack item = new ItemStack(hasTag ? ConfigUtils.menu_acquired_tag_material : ConfigUtils.menu_missing_tag_material);
         ItemMeta meta = item.getItemMeta();
+        boolean favorited = playerStats.isFavorite(tag);
 
-        meta.setDisplayName(ChatUtils.color(tag.getTitle() + "&7 Tag"));
+        meta.setDisplayName(ChatUtils.color((favorited ? "&e★ " : "") + tag.getTitle() + "&7 Tag"));
         meta.setLore(new ArrayList<String>() {{
             add(ChatUtils.color(hasTag ? "&aYou have access to this tag" : "&cYou do not have access to this tag"));
+
+            if (hasTag) {
+                add(ChatUtils.color(favorited ? "&7Shift click to remove from your favorites" : "&7Shift click to add to your favorite"));
+            }
 
             if (playerStats.getPlayer().isOp()) {
                 add("");
                 add(ChatUtils.color("&a&oName: " + tag.getName()));
                 add(ChatUtils.color("&a&oCreator: " + tag.getCreator()));
-                add(ChatUtils.color("&a&oCreated At: " + TimeUtils.parseTime(tag.getCreationDate())));
+                add(ChatUtils.color("&a&oCreated At: " + TimeUtils.parseTimeToCreatedAt(tag.getCreationDate())));
             }
         }});
 
