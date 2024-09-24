@@ -69,7 +69,8 @@ public class Tables {
         DatabaseUtils.run("CREATE TABLE " + DatabaseManager.FAVORITE_TAGS_TABLE + " (" +
                 "player_uuid CHAR(36) NOT NULL, " +
                 "tag_name VARCHAR(20) NOT NULL, " +
-                "PRIMARY KEY (player_uuid))"
+                "PRIMARY KEY (player_uuid, tag_name), " +
+                "INDEX player_uuid_index(player_uuid))"
         );
     }
 
