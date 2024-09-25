@@ -24,6 +24,7 @@ public class TagsCommand implements CommandExecutor {
     public static final String RESET_COMMAND_TEXT = "reset";
     public static final String REVEAL_COMMAND_TEXT = "reveal";
     public static final String INFO_COMMAND_TEXT = "info";
+    public static final String CUSTOM_COMMAND_TEXT = "custom";
 
     private HashMap<String, CommandHandler> subCommands;
 
@@ -36,6 +37,7 @@ public class TagsCommand implements CommandExecutor {
             put(RESET_COMMAND_TEXT, new TagsReset());
             put(REVEAL_COMMAND_TEXT, new TagsReveal());
             put(INFO_COMMAND_TEXT, new TagsInfo());
+            put(CUSTOM_COMMAND_TEXT, new TagsCustom());
         }};
     }
 

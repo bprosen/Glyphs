@@ -10,12 +10,14 @@ public class Tag {
     private String strippedTitle;
     private String creator;
     private int creationDate;
+    private boolean custom;
 
-    public Tag(String name, String title, String creator, int creationDate) {
+    public Tag(String name, String title, String creator, int creationDate, boolean custom) {
         this.name = name;
         setTitle(title);
         this.creator = creator;
         this.creationDate = creationDate;
+        this.custom = custom;
     }
 
     public String getCreator() {
@@ -45,8 +47,14 @@ public class Tag {
         return creationDate;
     }
 
+    public boolean isCustom() { return custom; }
+
+    public void toggleCustom() {
+        this.custom = !this.custom;
+    }
+
     public Tag clone() {
-        return new Tag(name, title, creator, creationDate);
+        return new Tag(name, title, creator, creationDate, custom);
     }
 
     public static class Builder {
@@ -54,6 +62,7 @@ public class Tag {
         private String title;
         private String creator;
         private int creationDate;
+        private boolean custom;
 
         public static Builder create() {
             return new Builder();
@@ -79,8 +88,13 @@ public class Tag {
             return this;
         }
 
+        public Builder custom(boolean custom) {
+            this.custom = custom;
+            return this;
+        }
+
         public Tag build() {
-            return new Tag(name, title, creator, creationDate);
+            return new Tag(name, title, creator, creationDate, custom);
         }
     }
 }

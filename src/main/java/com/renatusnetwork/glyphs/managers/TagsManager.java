@@ -34,6 +34,7 @@ public class TagsManager {
                     .title(result.get("title"))
                     .creator(result.get("creator_name"))
                     .creationDate(Integer.parseInt(result.get("creation_date")))
+                    .custom(Integer.parseInt(result.get("custom")) == 1)
                     .build()
         ));
     }
@@ -70,6 +71,11 @@ public class TagsManager {
     public void setTitle(Tag tag, String title) {
         tag.setTitle(title);
         TagsUtils.setTitle(tag.getName(), title);
+    }
+
+    public void toggleCustom(Tag tag) {
+        tag.toggleCustom();
+        TagsUtils.toggleCustom(tag.getName());
     }
 
     public List<Tag> search(String query) {

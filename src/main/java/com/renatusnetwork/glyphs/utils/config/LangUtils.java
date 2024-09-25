@@ -27,6 +27,7 @@ public class LangUtils {
     public static String successful_reload;
     public static String glyphs_command_help;
     public static String tag_set_self;
+    public static String tag_toggle_custom;
 
     public static void load() {
         FileConfiguration langConfig = ConfigManager.getInstance().get("lang");
@@ -48,6 +49,7 @@ public class LangUtils {
         glyphs_command_help = flattenStringList(langConfig.getStringList("glyphs_command_help"));
         tag_set_self = langConfig.getString("tag_set_self");
         tag_reveal_title = langConfig.getString("tag_reveal_title");
+        tag_toggle_custom = langConfig.getString("tag_toggle_custom");
     }
 
     public static String parse(String input, String... replacements) {

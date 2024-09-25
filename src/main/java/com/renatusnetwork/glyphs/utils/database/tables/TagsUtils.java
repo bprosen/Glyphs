@@ -12,10 +12,6 @@ public class TagsUtils {
         return DatabaseUtils.getResults(DatabaseManager.TAGS_TABLE, "*", "");
     }
 
-    public static HashMap<String, String> getTag(String name) {
-        return DatabaseUtils.getResult(DatabaseManager.TAGS_TABLE, "*", "WHERE name=?", name);
-    }
-
     public static void createTag(String name, String creator, int creationDate) {
         DatabaseUtils.runAync(
                 "INSERT INTO " + DatabaseManager.TAGS_TABLE + " " +
@@ -31,5 +27,9 @@ public class TagsUtils {
 
     public static void setTitle(String name, String title) {
         DatabaseUtils.runAync("UPDATE " + DatabaseManager.TAGS_TABLE + " SET title=? WHERE name=?", title, name);
+    }
+
+    public static void toggleCustom(String name) {
+        DatabaseUtils.runAync("UPDATE " + DatabaseManager.TAGS_TABLE + " SET custom=NOT custom WHERE name=?", name);
     }
 }

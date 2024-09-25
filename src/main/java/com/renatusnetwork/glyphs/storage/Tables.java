@@ -61,6 +61,7 @@ public class Tables {
                 "title VARCHAR(100) DEFAULT NULL, " +
                 "creator_name VARCHAR(16) NOT NULL, " +
                 "creation_date INT NOT NULL, " +
+                "custom BIT DEFAULT 0, " +
                 "PRIMARY KEY(name))"
         );
     }
