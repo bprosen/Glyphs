@@ -7,6 +7,8 @@ import com.renatusnetwork.glyphs.objects.menus.items.GenericItem;
 import com.renatusnetwork.glyphs.objects.menus.items.views.CurrentTagItem;
 import com.renatusnetwork.glyphs.objects.menus.types.ActionType;
 import com.renatusnetwork.glyphs.objects.menus.Menu;
+import com.renatusnetwork.glyphs.objects.menus.types.FilterType;
+import com.renatusnetwork.glyphs.objects.menus.types.SortType;
 import com.renatusnetwork.glyphs.objects.menus.types.ViewType;
 import com.renatusnetwork.glyphs.objects.menus.items.ActionItem;
 import com.renatusnetwork.glyphs.objects.menus.items.ViewItem;
@@ -212,10 +214,21 @@ public class MenusUtils {
                             .menuPage(page)
                             .item(itemStack)
                             .build();
+                case FILTER:
+                    return FilterItem.Builder.create()
+                            .menuPage(page)
+                            .item(itemStack)
+                            .type(FilterType.valueOf(config.getString(slotActionPath + ".filter")))
+                            .build();
+                case SORT_BY:
+                    return SortBy.Builder.create()
+                            .menuPage(page)
+                            .item(itemStack)
+                            .build();
             }
 
         } catch (IllegalArgumentException exception) {
-            Glyphs.getLog().info("Could not parse action type: " + type);
+            Glyphs.getLog().info("Could not parse type");
             exception.printStackTrace();
         }
         return null;

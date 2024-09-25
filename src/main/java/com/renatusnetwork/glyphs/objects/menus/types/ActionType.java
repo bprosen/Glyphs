@@ -4,5 +4,7 @@ public enum ActionType {
     OPEN,
     SEARCH,
     TAG,
-    RESET
+    RESET,
+    FILTER,
+    SORT_BY
 }

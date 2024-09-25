@@ -3,6 +3,8 @@ package com.renatusnetwork.glyphs.utils.database.tables;
 import com.renatusnetwork.glyphs.Glyphs;
 import com.renatusnetwork.glyphs.managers.DatabaseManager;
 import com.renatusnetwork.glyphs.managers.TagsManager;
+import com.renatusnetwork.glyphs.objects.menus.types.FilterType;
+import com.renatusnetwork.glyphs.objects.menus.types.SortType;
 import com.renatusnetwork.glyphs.objects.tags.Tag;
 import com.renatusnetwork.glyphs.utils.database.DatabaseUtils;
 import java.util.HashMap;
@@ -16,10 +18,20 @@ public class PlayerStatsUtils {
         DatabaseUtils.run("INSERT IGNORE INTO " + DatabaseManager.PLAYERS_TABLE + " (uuid, name) VALUES(?,?)", uuid.toString(), name);
     }
 
-    public static Tag getCurrentTag(UUID uuid) {
-        return TagsManager.getInstance().get(
-                DatabaseUtils.getResult(DatabaseManager.PLAYERS_TABLE, "current_tag", "WHERE uuid=?", uuid.toString()).get("current_tag")
+    public static HashMap<String, String> getPlayerStats(UUID uuid) {
+        return DatabaseUtils.getResult(DatabaseManager.PLAYERS_TABLE, "*", "WHERE uuid=?", uuid.toString());
+    }
+
+    public static void toggleFilter(UUID uuid, FilterType filter) {
+        DatabaseUtils.runAync(
+                "UPDATE " + DatabaseManager.PLAYERS_TABLE + " SET " + DatabaseUtils.filterKey(filter) + "=NOT " + DatabaseUtils.filterKey(filter) +
+                      " WHERE uuid=?",
+                      uuid.toString()
         );
+    }
+
+    public static void setSortBy(UUID uuid, SortType sortBy) {
+        DatabaseUtils.runAync("UPDATE " + DatabaseManager.PLAYERS_TABLE + " SET sort_by=? WHERE uuid=?", sortBy.name(), uuid.toString());
     }
 
     public static void setCurrentTag(UUID uuid, String tagName) {

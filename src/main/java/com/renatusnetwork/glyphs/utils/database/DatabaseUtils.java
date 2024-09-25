@@ -2,6 +2,7 @@ package com.renatusnetwork.glyphs.utils.database;
 
 import com.renatusnetwork.glyphs.Glyphs;
 import com.renatusnetwork.glyphs.managers.DatabaseManager;
+import com.renatusnetwork.glyphs.objects.menus.types.FilterType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.*;
@@ -77,5 +78,9 @@ public class DatabaseUtils {
             Glyphs.getLog().info("Error occured running async query: " + query + ", and params: " + Arrays.toString(params));
             exception.printStackTrace();
         }
+    }
+
+    public static String filterKey(FilterType type) {
+        return "filter_" + type.name().toLowerCase();
     }
 }

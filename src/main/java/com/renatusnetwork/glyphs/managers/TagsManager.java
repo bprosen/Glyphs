@@ -1,12 +1,13 @@
 package com.renatusnetwork.glyphs.managers;
 
+import com.renatusnetwork.glyphs.objects.menus.types.FilterType;
+import com.renatusnetwork.glyphs.objects.menus.types.SortType;
+import com.renatusnetwork.glyphs.objects.players.PlayerStats;
 import com.renatusnetwork.glyphs.objects.tags.Tag;
 import com.renatusnetwork.glyphs.utils.ChatUtils;
 import com.renatusnetwork.glyphs.utils.database.tables.TagsUtils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TagsManager {
@@ -84,5 +85,25 @@ public class TagsManager {
         return tags.values().stream().filter(
                 tag -> tag.hasTitle() && tag.getStrippedTitle().toLowerCase().contains(queryLowerCase)
             ).collect(Collectors.toList());
+    }
+
+    public List<Tag> filterTags(PlayerStats playerStats, HashMap<FilterType, Boolean> filters) {
+        boolean showOwned = filters.get(FilterType.OWNED);
+        boolean showUnowned = filters.get(FilterType.UNOWNED);
+        boolean showCustom = filters.get(FilterType.CUSTOM);
+
+        if (!showOwned || !showUnowned || !showCustom) {
+            return tags.values().stream().filter(
+                    tag -> {
+                        boolean hasTag = playerStats.hasTag(tag);
+
+                        return (showOwned && hasTag) ||
+                               (showUnowned && !hasTag) ||
+                               (showCustom && tag.isCustom());
+                    }
+                ).collect(Collectors.toList());
+        } else {
+            return new ArrayList<>(tags.values());
+        }
     }
 }

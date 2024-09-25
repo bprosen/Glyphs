@@ -1,11 +1,13 @@
 package com.renatusnetwork.glyphs.storage;
 
 import com.renatusnetwork.glyphs.managers.DatabaseManager;
+import com.renatusnetwork.glyphs.objects.menus.types.SortType;
 import com.renatusnetwork.glyphs.utils.database.DatabaseUtils;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class Tables {
@@ -43,6 +45,10 @@ public class Tables {
                 "uuid CHAR(36) NOT NULL, " +
                 "name VARCHAR(16) NOT NULL, " +
                 "current_tag VARCHAR(20) DEFAULT NULL, " +
+                "sort_by ENUM(" + enumQuotations(SortType.values()) + ") NOT NULL, " +
+                "filter_owned BIT DEFAULT 1, " +
+                "filter_unowned BIT DEFAULT 1, " +
+                "filter_custom BIT DEFAULT 1, " +
                 "PRIMARY KEY(uuid))"
         );
     }
@@ -85,5 +91,15 @@ public class Tables {
                 "ON UPDATE CASCADE " +
                 "ON DELETE CASCADE"
         );
+    }
+
+    private static String enumQuotations(Enum<?>[] array) {
+        String finalString = "";
+
+        for (Enum<?> enumerator : array) {
+            finalString += "'" + enumerator.name() + "',";
+        }
+
+        return finalString.substring(0, finalString.length() - 1);
     }
 }
